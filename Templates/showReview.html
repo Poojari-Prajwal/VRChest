@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'img/logo.png' %}">
+  <title>Edit or Delete a Review</title>
+
+    <!-- Bootstrap -->
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+ integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+ integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+ crossorigin="anonymous"></script>
+   
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        .review-div
+{
+	border:2px solid #41c2df;
+	padding:10px;
+	border-radius: 5px;
+	margin-bottom: 30px;
+	background-color: #f0f4f5;
+}
+.author
+{
+	text-align: right;
+	margin-top:10px;
+	font-weight: bold;
+	font-size:1.1rem;
+}
+h1{
+    text-align:center;
+}
+.one h1 {
+  text-align: center;
+  text-transform: uppercase;
+  padding-bottom: 5px;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  font-weight: 300;
+  font-size: 3rem;
+  color: #080808;
+  -webkit-transition: all 0.4s ease 0s;
+  -o-transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
+}
+.one h1:before {
+  width: 28px;
+  height: 5px;
+  display: block;
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  margin-left: -14px;
+  background-color: #17a2c2;
+}
+.one h1:after {
+  width: 100px;
+  height: 1px;
+  display: block;
+  content: "";
+  position: relative;
+  margin-top: 25px;
+  left: 50%;
+  margin-left: -50px;
+  background-color: #17a2c2
+}
+@media screen and (max-width: 480px) {
+	.one h1 {
+	  font-size: 2.5rem !important;
+	}
+  }
+  @media screen and (max-width: 300px) {
+	.one h1 {
+	  font-size: 2rem !important;
+	}
+  }
+
+    </style>
+</head>
+<body>
+    {% include 'headerstaff.html' %} 
+    
+    <br><br><br><br><br>
+    <div class="one">
+      <h1>Reviews</h1>
+    </div>
+    <br><br>
+    <div class="container">
+      <div class="row review justify-content-around">
+        {% for review in reviews %}
+        <div class="col-10 col-sm-9 col-md-9 col-lg-5 col-centered review-div">
+          <i class="fa fa-quote-left fa-2x fa-pull-left fa-border"></i>
+         <i>{{ review.Review_text }}</i>
+          <p class="stars"><center>
+            
+            <span>
+              <i class="fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o {% endif %}"
+                aria-hidden="true" style=" font-size:1.6rem;
+                  color:rgb(216, 216, 50);"></i>
+
+              <i class="fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o {% endif %}"
+                aria-hidden="true" style=" font-size:1.6rem;
+                  color:rgb(216, 216, 50);"></i>
+
+              <i class="fa fa-star{% if review.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o {% endif %}"
+                aria-hidden="true" style=" font-size:1.6rem;
+                  color:rgb(216, 216, 50);"></i>
+
+              <i class="fa fa-star{% if review.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o {% endif %}"
+                aria-hidden="true" style=" font-size:1.6rem;
+                  color:rgb(216, 216, 50);"></i>
+
+              <i class="fa fa-star{% if review.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o {% endif %}"
+                aria-hidden="true" style=" font-size:1.6rem;
+                  color:rgb(216, 216, 50);"></i>
+            </span>
+        
+          </center></p>
+          <p class="author"> - {{ review.Review_username }}</p>
+          <a href="{% url 'edit-review' review.id  %}">
+              <button type="button" class="btn btn-success" >Edit</button>
+          </a>
+          <a href="{% url 'delete-review' %}?s_id={{ review.id}}">
+            <button class="btn btn-danger" onclick="return confirm('Are you sure want to delete?');">Delete</button>
+        </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <br>
+</body>
+</html>

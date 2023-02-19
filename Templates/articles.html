@@ -1,0 +1,70 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" description="Check out the articles related to mediacl fields - Pulmonology and Gynecology written by the doctors of VR Chest and Women Care."/>
+    <link rel="icon" href="{% static 'img/logo.png' %}" />
+    <title>Articles | VR Chest and Women Care</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:500,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="{% static 'css/article.css' %}" class="css" />
+  </head>
+  <body>
+    <section class="header">
+      <div class="container">
+        <div class="fixed-top parent">
+          <div class="brands">
+            <a href="/">
+              <img src="{% static 'img/logo.png' %}" alt="logo" />
+            </a>
+          </div>
+          <div class="back">
+            <a href="/"
+              ><p style="border-radius: 50%">
+                <i class="fas fa-arrow-circle-left"></i></p
+            ></a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="article">
+      <div class="container">
+        <br /><br /><br /><br /><br />
+        <div class="one">
+          <h1>Articles</h1>
+        </div>
+        <br /><br />
+        <div class="art">
+          {% for article in articles %}
+          <div>
+            <h4>{{ article.title }}</h4>
+            <p>{{ article.content | slice:":200"}}...</p>
+            <a href="{% url 'individual-article' article.slug %}">
+              <button class="btn btn-primary">Read More</button>
+            </a>
+          </div>
+          <br />
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <br /><br />
+  </body>
+</html>

@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" description="Chekout this article from VR Chest and Women Care"/>
+    <link rel="icon" href="{% static 'img/logo.png' %}" />
+    {% for article in articles %}
+    <title>{{ article.title }} | VR Chest and Women Care</title>
+    {% endfor %}
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:500,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{% static 'css/individualArticle.css' %}"
+      class="css"
+    />
+  </head>
+  <body>
+    <section class="header">
+      <div class="container">
+        <div class="fixed-top parent">
+          <div class="brands">
+            <img src="{% static 'img/logo.png' %}" alt="" />
+          </div>
+          <div class="back">
+            <a href="/"
+              ><p style="border-radius: 50%">
+                <i class="fas fa-arrow-circle-left"></i></p
+            ></a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="article">
+      <div class="container">
+        <br /><br /><br /><br /><br />
+        {% for article in articles %}
+        <div class="one" style="font-weight: bolder; margin-bottom: 30px">
+          <h1>{{ article.title}}</h1>
+        </div>
+        <div class="art">
+          <div>
+            <p>{{ article.content | linebreaksbr }}</p>
+          </div>
+          <br />
+        </div>
+        {% if article.link %}
+        <div class="link">
+          <p>For more information:</p>
+          <p><a href="{{ article.link }}" target="_blank">{{article.link}}</a></p>
+        </div>
+        {% endif %} {% endfor %}
+      </div>
+    </section>
+    <br /><br />
+  </body>
+</html>

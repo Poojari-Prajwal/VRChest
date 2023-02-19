@@ -1,0 +1,502 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, height=device-height, initial-scale=1" name="viewport" description="Experience the future of healthcare with VR Chest. Our cutting-edge technology provides immersive, patient-centered care for a variety of conditions">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/about.css' %}">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="icon" href="{% static 'img/logo.png' %}">
+  <title>VR Chest and Women Care</title>
+
+
+  <!-- Google Reviews -->
+ 
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+<!-- AOS -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
+
+</head>
+
+<body>
+  <!-- Header -->
+  <section id="header">
+    <div class="headers containers">
+      <div class="nav-bars">
+        <div class="brands">
+
+          <img src="{% static 'img/logo.png' %}" alt="logo">
+
+        </div>
+        <div class="nav-lists">
+          <div class="hamburger">
+            <div class="bar"></div>
+          </div>
+          <ul >
+            <li><a href="{% url 'book-appointment' %}">Appointment</a></li>
+            <li><a href="{% url 'facilities' %}">Facilities</a></li>
+            <li><a href="{% url 'gallery' %}">Gallery</a></li>
+            <li><a href="{% url 'articles' %}">Articles</a></li>
+            <li><a href="#hidden-contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Header -->
+
+  <!-- Hero Section  -->
+  <section id="hero">
+
+    <div class="banner">
+      <div class="overlay">
+      </div>
+      <div class="content">
+        <br>
+        {% for messege in messages %}
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+          <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+          </symbol>
+        </svg>
+        <div class="alert alert-success d-flex align-items-center" role="alert"
+          style="margin-top:-50px;padding:0px;padding-left:10px;padding-right:10px;">
+          <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+            <use xlink:href="#check-circle-fill" />
+          </svg>
+          <br><br>
+          <div class="col-10" style="text-align:left;">
+            {{ messege }}
+          </div>
+          <div class="float-right col-1" style="float:right; text-align:right;right:10px;">
+
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+              style="float:right;text-align:right"></button>
+          </div>
+        </div>
+        {% endfor %}
+        <h1 class="hero-title">VR Chest and Women Care</h1>
+        <p class="hero-sub-title">Experience immersive healthcare like never before with VR Chest and womens care</p>
+        <a href="{% url 'book-appointment' %}">
+          <div class="hero-appointment-btn">
+              <button class="btn btn-primary">Book an Appointment</button>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- </div> -->
+  </section>
+  <!-- End Hero Section  -->
+
+  <!-- About Section -->
+  <section id="about">
+    <br><br>
+    <div class="one">
+      <h1>About Us</h1>
+    </div>
+    <br>
+    <div class="container mainparent">
+      <div class="container" style="padding:10px;">
+        <div class="parent1">
+          <div class="p1">
+            <img src="{% static 'img/hero.png' %}" alt="pulmonology_vector_img">
+          </div>
+
+          <div class="p2">
+            Who doesn’t want to be healthy? We live in a world where everyone is racing
+            against time and pace. People are suffering from a lot of illnesses due to the
+            changing environment and stressful life. Women are having early menopause and
+            infertility due to late marriages and lifestyles. With growing pollution and
+            exposure to new viruses, people suffer from various respiratory illnesses. We want
+            a doctor who can be compassionate, and at the same time, be approachable as your
+            friend.
+          </div>
+        </div>
+        <div class="parent2">
+          <div class="p1 ">
+            <img src="{% static 'img/gyn.jpg' %}" alt="gynaecology_vector_img">
+          </div>
+          <div class="p2">
+            Welcome to <b> VR CHEST AND WOMEN CARE CLINIC.</b>
+            The clinic was conceived with the ideology of providing the state of the art
+            facilities in the management of respiratory and women’s health by Dr. Vasunethra
+            Kasaragod and Dr. Veni Nekkilady.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="numbers ">
+        <div class=" number col-lg-3 col-md-3 col-sm-8 col-8">
+          <span>25,000+</span><br>
+          <span>Patients treated</span>
+        </div>
+        <div class="number col-lg-3 col-md-3 col-sm-8 col-8">
+          <span>12+</span><br>
+          <span>Years of Experience</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- End About Section -->
+
+  <!-- Facilities Section -->
+
+  <!-- End Facilities Section -->
+
+  <!-- Doctors Section -->
+  <section id="doctors">
+    <br><br>
+    <div class="one">
+      <h1>our doctors</h1>
+    </div>
+    <br>
+    <div class="container">
+      <div class=" parents">
+        <div class="card  doctor" style="max-width: 18rem;">
+          <img src="{% static 'img/vasu.jpg' %}" class="card-img-top" alt="Dr Vasunethra" loading="lazy">
+          <div class="card-body">
+            <h5 class="card-title">Dr. Vasunethra Kasargod</h5>
+            <h6>MBBS MD EDRM</h6>
+            <h6>Consultant Pulmonologist</h6>
+            <center>
+              <div class="know-more-btn">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Know More
+                </button>
+              </div>
+            </center>
+          </div>
+        </div>
+        <div class="card doctor" style="max-width: 18rem;">
+          <img src="{% static 'img/veni.jpg' %}" class="card-img-top" alt="dr Veni" loading="lazy">
+          <div class="card-body">
+            <h5 class="card-title">Dr. Veni N</h5>
+            <h6>MBBD MD DNB FNAMS</h6>
+            <h6>Consultant Gynecologist</h6>
+            <center>
+              <div class="know-more-btn"> 
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#exampleModal2">
+                Know More
+              </button>
+              </div>
+            </center>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Dr. Vasunethra Kasaragod</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Dr. Vasunethra Kasargod is a well-known pulmonologist in Bangalore whose main
+            specialties include asthma, allergy, and interventional pulmonology. He has
+            completed his Med-school at the reputed Bangalore Medical College and Research
+            Institute. Later, the doctor obtained his Specialty MD degree in pulmonology (lung
+            diseases) from Lokamanya Tilak Medical college and hospital, Mumbai, which is
+            one of the best institutes for the same in India. He later on obtained the prestigious
+            European Diploma in Respiratory Diseases from the European Respiratory Society
+            in France. He has gained rich experience in Pulmonology being associated with
+            various Institutes in Bangalore for 11 years. He treated thousands of patients
+            suffering from lung problems, mastered the skills, and is currently working as a
+            Consultant Interventional Pulmonologist at the premier Manipal Hospital Miller’s
+            Road, Bangalore.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Dr. Veni N</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Dr. Veni Nekkilady is a gynecologist whose main area of interest includes
+            laparoscopy and high-risk pregnancy. She graduated from the prestigious
+            Bangalore medical college and went on to be a rank holder in AIIMS Delhi from
+            where she attained her specialty in gynecology. At AIIMS, she was guided by the
+            best gynecologists in India and treated various patients suffering from infertility,
+            high-risk pregnancy, and cancer, catering to patients from all over India. Her
+            passion was to learn the art of healing. She went on to advanced training in
+            laparoscopy surgery from Kochi, Kerala. She has worked as an Assistant professor
+            at St. Johns medical college and MS Ramiah Medical College, Bangalore for 5
+            years. She has been associated with Cloud Nine and Motherhood Hospitals for 4
+            years as a Consultant Gynecologist.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End f Doctors Section -->
+
+  <!-- Reviews -->
+  <section id="reviews">
+    <br><br>
+    <div class="one">
+      <h1>testimonials</h1>
+    </div>
+    <br><br>
+
+    <div class="container">
+      <div id="carouselExampleControls" class=" row d-flex carousel slide justify-content-center align-items-center"
+        data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 offset-2 col-centered review-div">
+              <i class="fa fa-quote-left fa-2x fa-pull-left fa-border"></i>
+              <p>Consulted Dr Vasunethra for my dad who had severe cough and he couldn't even speak a word. But within 15 days post consulting he was totally recovered and now continuing the medicine he has prescribed. Highly recommend this place for those who have severe lung infection and phlegm.
+                Dr is very positive and courteous with patients.</p>
+              <p class="stars">
+                <center>
+                  <span>
+                    <i class="fa fa-star" aria-hidden="true" style=" font-size:1.6rem;color:rgb(216, 216, 50);"></i>
+                    <i class="fa fa-star" aria-hidden="true" style=" font-size:1.6rem;color:rgb(216, 216, 50);"></i>
+                    <i class="fa fa-star" aria-hidden="true" style=" font-size:1.6rem; color:rgb(216, 216, 50);"></i>
+                    <i class="fa fa-star" aria-hidden="true" style=" font-size:1.6rem; color:rgb(216, 216, 50);"></i>
+                    <i class="fa fa-star" aria-hidden="true" style=" font-size:1.6rem; color:rgb(216, 216, 50);"></i>
+                  </span>
+
+                </center>
+              </p>
+              <p class="author"> -Sapna Sebastian</p>
+            </div>
+          </div>
+          {% for review in reviews %}
+          <div class="carousel-item ">
+            <div class="col-8 col-sm-8 col-md-8 col-lg-8 offset-2 col-centered review-div ">
+              <i class="fa fa-quote-left fa-2x fa-pull-left fa-border"></i>
+              <i>{{ review.Review_text }}</i>
+              <p class="stars">
+                <center>
+                  <span>
+                    <i class="fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o {% endif %}"
+                      aria-hidden="true" style=" font-size:1.6rem;
+                        color:rgb(216, 216, 50);"></i>
+
+                    <i class="fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o {% endif %}"
+                      aria-hidden="true" style=" font-size:1.6rem;
+                        color:rgb(216, 216, 50);"></i>
+
+                    <i class="fa fa-star{% if review.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o {% endif %}"
+                      aria-hidden="true" style=" font-size:1.6rem;
+                        color:rgb(216, 216, 50);"></i>
+
+                    <i class="fa fa-star{% if review.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o {% endif %}"
+                      aria-hidden="true" style=" font-size:1.6rem;
+                        color:rgb(216, 216, 50);"></i>
+
+                    <i class="fa fa-star{% if review.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o {% endif %}"
+                      aria-hidden="true" style=" font-size:1.6rem;
+                        color:rgb(216, 216, 50);"></i>
+                  </span>
+                </center>
+              </p>
+              <p class="author"> - {{ review.Review_username }}</p>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+          data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"
+            style="color:#17a2c2 !important;background-color:#17a2c2"></span>
+          <span class="visually-hidden" style="color:#17a2c2 !important;background-color:#17a2c2">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+          data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"
+            style="color:#17a2c2 !important;background-color:#17a2c2"></span>
+          <span class="visually-hidden" style="color:#17a2c2 !important;background-color:#17a2c2">Next</span>
+        </button>
+      </div>
+    </div>
+    </div>
+    </div>
+    <div class="container" style="display:flex;flex-direction:column;align-items:center;row-gap:20px;">
+      <div style="flex:1;" class="basic-btn">
+        <a href="https://www.google.com/search?gs_ssp=eJzj4tVP1zc0LEouNo1PLs8wYLRSMagwTkpMNTRPsTRLSbawNDE2tAIKpaYkJhskGhsbJlpamKV58ZcVKSRnpBaXKCTnZOZlJgMA1nUVPA&q=vr+chest+clinic&oq=vr+cheest+&aqs=chrome.1.69i57j46i13i175i199i512j0i13i512l5j0i22i30i625l2.3262j0j7&sourceid=chrome&ie=UTF-8#lrd=0x3bae17d96dc89431:0x3edac0a331a986f,1,,,," target="_blank">
+          <button class="btn btn-primary">View all Google Reviews</button>
+        </a>
+      </div>
+      <div style="flex:1;" class="basic-btn">
+        <a href="https://www.practo.com/bangalore/doctor/dr-veni-nekkilady-gynecologist-obstetrician?specialization=Gynecologist&practice_id=1349684" target="_blank">
+          <button class="btn btn-primary">View all Practo Reviews of Dr. Veni N</button>
+        </a>
+      </div>
+      <div style="flex:1;" class="basic-btn">
+        <a href="https://www.practo.com/bangalore/doctor/dr-vasunethra-kasargod-pulmonologist-1" target="_blank"> 
+          <button class="btn btn-primary">View all Practo Reviews of Dr. Vasunethra Kasargod</button>
+        </a>
+      </div>
+    </div>
+    <br><br>
+
+  </section>
+  <!-- End of Reviews --> 
+
+
+
+  <!-- Contact Section -->
+  <span class="anchor" id="hidden-contact"></span>
+  <section id="contact">
+    <br><br>
+    <div class="one">
+      <h1>contact</h1>
+    </div>
+ 
+    <div class="contact container">
+
+      {% comment %} <div class="flexcontact">
+        <div>
+          <a href="tel:08048903353">
+            <button class="btn btn-primary"><i class="fa fa-phone fa-shake" style="font-size:24px;"></i> : 080 -
+              48903353</button>
+          </a>
+        </div>
+        <div>
+          <a href="tel:9742532343">
+            <button class="btn btn-primary"><i class="fa fa-phone fa-shake" style="font-size:24px;"></i> : 97425
+              32343</button>
+          </a>
+        </div>
+        <div>
+          <a href="">
+            <button class="btn btn-primary"><i class="fa fa-envelope" style="font-size:24px;"></i> : abcd@gmail.com
+            </button>
+          </a>
+        </div>
+      </div> {% endcomment %}
+      <div class="row">
+        <div class="col-md-4">
+          <div class="info address mb-3">
+            <a href="https://goo.gl/maps/XPnKH2LhfzsezZUL9">
+              <i class="fas fa-map-marker-alt"></i>
+            </a>
+            <h4>Location</h4>
+            <p>VR CHEST AND WOMEN CARE
+              No.356, Abhilash Complex, Hennur Main Rd, opposite BLOCK-1, Bengaluru, Karnataka 560043</p>
+          </div>
+          <div class="email info mb-3">
+            <a href="mailto:"><i class="fa-solid fa-envelope"></i></a>
+            <h4>Email:</h4>
+            <p>vrchest@gmail.com</p>
+          </div>
+          <div class="mobile info">
+            <a href="tel:+919742532343"><i class="fa-solid fa-phone"></i></a>
+            <h4>Phone:</h4>
+            <p class="mb-1">9742532343</p>
+            <p>08048903353</p>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="col-centered map">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.1026200031715!2d77.63240651430485!3d13.029136617139638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae17d96dc89431%3A0x3edac0a331a986f!2sVR%20CHEST%20AND%20WOMEN%20CARE!5e0!3m2!1sen!2sin!4v1665247782452!5m2!1sen!2sin"
+              height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              class="col-12 col-sm-12 col-md-12 col-lg-12 col-centered"></iframe>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="msg container">
+      <div class="one">
+        <h1>Leave us a note</h1>
+      </div>
+      <br><br>
+      <form class="row g-3 needs-validation" method="post" action="{% url 'saveFeedback' %}">
+        {% csrf_token %}
+        <div class="col-10 col-sm-10 col-md-10 col-lg-10 offset-1 col-centered">
+          <label for="validationCustom01" class="form-label">Name <span style="color:red">*</span></label>
+          <input type="text" class="form-control" id="validationCustom01" required name="name">
+        </div>
+        <div class="col-10 col-sm-10 col-md-10 col-lg-10  offset-1 col-centered">
+          <label for="validationCustomUsername" class="form-label">Email <span style="color:red">*</span></label><br>
+          <span class="form-text">(We never spam your email)</span>
+          <div class="input-group has-validation">
+            <input type="email" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend"
+              name="email" required>
+          </div>
+
+        </div>
+        <div class="col-10 col-sm-10 col-md-10 col-lg-10  offset-1 col-centered">
+          <label for="exampleFormControlTextarea1" class="form-label">Messege <span style="color:red">*</span></label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="msg"></textarea>
+        </div>
+        <div class="col-10 col-sm-10 col-md-10 col-lg-10 offset-1 col-centered">
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <!-- End Contact Section -->
+
+  <!-- Footer -->
+  <section id="footer">
+    <div class="footer containers">
+
+      <p>Copyright © 2022 VR Chest and Women Care. All rights reserved.</p>
+    </div>
+  </section>
+  <!-- End Footer -->
+
+  <!-- Pre loader -->
+  <div class="loadelement"><span class="spinner"> </span></div>
+  <!-- End of Pre loader -->
+
+
+
+
+  <!--  JS -->
+  <script src="{% static 'js/script.js' %}"></script>
+
+  <!-- Pre loader -->
+  {% include 'preloader.html' %}
+</body>
+
+</html>

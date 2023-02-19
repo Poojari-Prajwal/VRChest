@@ -1,0 +1,58 @@
+.doc1 img,
+.doc2 img {
+  width: 150px;
+}
+.doc1,
+.doc2 {
+  border: 2px solid #17a2c2;
+  padding: 15px;
+  border-radius: 15px;
+}
+
+.one h1 {
+  text-align: center;
+  text-transform: uppercase;
+  padding-bottom: 5px;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  font-weight: 300;
+  font-size: 3rem;
+  color: #080808;
+  -webkit-transition: all 0.4s ease 0s;
+  -o-transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
+}
+.one h1:before {
+  width: 28px;
+  height: 5px;
+  display: block;
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  margin-left: -14px;
+  background-color: #17a2c2;
+}
+.one h1:after {
+  width: 100px;
+  height: 1px;
+  display: block;
+  content: "";
+  position: relative;
+  margin-top: 25px;
+  left: 50%;
+  margin-left: -50px;
+  background-color: #17a2c2;
+}
+
+@media screen and (max-width: 480px) {
+  .one h1 {
+    font-size: 2.5rem !important;
+  }
+}
+@media screen and (max-width: 300px) {
+  .one h1 {
+    font-size: 2rem !important;
+  }
+}

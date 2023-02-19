@@ -1,0 +1,211 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'img/logo.png' %}">
+  <title>Add or Delete an image</title>
+
+      <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+
+    <style>
+        h1{
+            text-align: center;
+        }
+        .right 
+        {
+            float:right;
+        }
+        img{
+            margin-bottom: 15px;
+        }
+        .hover-img {
+            color: #fff;
+            display: inline-block;
+            margin: 8px;
+            max-width: 360px;
+            min-width: 240px;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+            width: 100%;
+          }
+          
+          .hover-img * {
+            box-sizing: border-box;
+            transition: all 0.45s ease;
+          }
+          
+          .hover-img::before,
+          .hover-img::after {
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            content: '';
+            transition: all 0.3s ease;
+            z-index: 1;
+            opacity: 0;
+            transform: scaleY(1);
+          }
+          
+          .hover-img img {
+            vertical-align: top;
+            max-width: 100%;
+            backface-visibility: hidden;
+          }
+          
+          .hover-img figcaption {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            align-items: center;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            z-index: 2;
+            transition-delay: 0.1s;
+            font-size: 24px;
+            font-weight: 400;
+            text-transform: uppercase;
+          }
+          
+          .hover-img:hover::before,
+          .hover-img:hover::after {
+            transform: scale(1);
+            opacity: 1;
+          }
+          
+          .hover-img:hover > img {
+            opacity: 0.7;
+          }
+          
+          .hover-img:hover figcaption {
+            opacity: 1;
+          }
+          .one h1 {
+            text-align: center;
+            text-transform: uppercase;
+            padding-bottom: 5px;
+            position: relative;
+            padding: 0;
+            margin: 0;
+            font-weight: 300;
+            font-size: 3rem;
+            color: #080808;
+            -webkit-transition: all 0.4s ease 0s;
+            -o-transition: all 0.4s ease 0s;
+            transition: all 0.4s ease 0s;
+          }
+          .one h1:before {
+            width: 28px;
+            height: 5px;
+            display: block;
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            margin-left: -14px;
+            background-color: #17a2c2;
+          }
+          .one h1:after {
+            width: 100px;
+            height: 1px;
+            display: block;
+            content: "";
+            position: relative;
+            margin-top: 25px;
+            left: 50%;
+            margin-left: -50px;
+            background-color: #17a2c2
+          }
+          .bu
+          {
+            display:flex;
+            justify-content: flex-end;
+          }
+          @media screen and (max-width:480px)
+          {
+            .bu 
+            {
+              justify-content: center;
+            }
+          }
+          @media screen and (max-width: 480px) {
+            .one h1 {
+              font-size: 2.5rem !important;
+            }
+            }
+            @media screen and (max-width: 300px) {
+            .one h1 {
+              font-size: 2rem !important;
+            }
+            }
+    </style>
+</head>
+<body>
+    {% include 'headerstaff.html' %}
+    
+    <br><br><br><br><br>
+    <div class="one">
+        <h1>gallery</h1>
+    </div>
+    <br><br>
+    <div class="container">
+      <div class="bu">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Upload an image</button> <br><br>
+      </div> 
+      <br>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Upload Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{% url 'add-gallery-images' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="file" accept="image/*" class="form-control" id="exampleFormControlInput1" name="uploadedImage" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">Upload</button>
+                        </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        <div class="row" style="display:flex;justify-content:space-around;">
+            {% if images %}
+                {% for image in images %}
+                    <figure class="hover-img col-12 col-sm-6 col-md-6">
+                        <img src="{{ image.Image.url }}" alt="image" class="col-12"> <br>
+                        <figcaption>
+                            <a href="{% url 'delete-gallery-iamges' %}?s_id={{ image.id}}">
+                                <button class="btn btn-danger" onclick="return confirm('Are you sure want to delete?');">Delete</button>
+                            </a>
+                        </figcaption>
+                    </figure>
+                {% endfor %}
+                {% else %}
+                <h4 style="text-align:center; margin-top:50px">No Images Uploaded</h4>
+                {% endif %}
+        </div>
+    </div>
+    <br><br>
+</body>
+</html>

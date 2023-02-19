@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" description="Checkout the images of VR Chest and Women Care." />
+
+    <link rel="stylesheet" href="{% static 'css/gallery.css' %}" class="css" />
+    <link rel="icon" href="{% static 'img/logo.png' %}" />
+    <title>Gallery | VR Chest and Women Care</title>
+  </head>
+  <body>
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/fontawesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:500,700&display=swap"
+      rel="stylesheet"
+    />
+    <!--Lightbox CDN  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.css"
+      integrity="sha512-Woz+DqWYJ51bpVk5Fv0yES/edIMXjj3Ynda+KWTIkGoynAMHrqTcDUQltbipuiaD5ymEo9520lyoVOo9jCQOCA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <body>
+      <section class="header">
+        <div class="container">
+          <div class="fixed-top parent">
+            <div class="brands">
+              <a href="/">
+                <img src="{% static 'img/logo.png' %}" alt="logo" />
+              </a>
+            </div>
+            <div class="back">
+              <a href="/"
+                ><p style="border-radius: 50%">
+                  <i class="fas fa-arrow-circle-left"></i></p
+              ></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <br /><br /><br /><br /><br />
+      <div class="one" style="font-weight: bolder; margin-bottom: 30px">
+        <h1>GAllery</h1>
+      </div>
+      <br />
+      <div class="container">
+        <div class="gallery">
+          {% if images %} {% for image in images %}
+          <a href="{{ image.Image.url }}" data-lightbox="models">
+            <img src="{{ image.Image.url }}" loading="lazy" alt="VR-Chest-and-Women-Care-Image"/>
+          </a>
+          {% endfor %} {%else%}
+          <p style="text-align: center">No images to show</p>
+          {% endif %}
+        </div>
+      </div>
+      <br /><br />
+
+      <!-- Lightbox Script tag   -->
+      <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.js"
+        integrity="sha512-0rYcJjaqTGk43zviBim8AEjb8cjUKxwxCqo28py38JFKKBd35yPfNWmwoBLTYORC9j/COqldDc9/d1B7dhRYmg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+      ></script>
+    </body>
+  </body>
+</html>

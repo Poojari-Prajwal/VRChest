@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" description="Book your appointment with Dr. Veni Nß - VR Chest and Women Care."/>
+    <link rel="icon" href="{% static 'img/logo.png' %}" />
+    <title>Book an Appointment | VR Chest and Women Care</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- css -->
+    <link rel="stylesheet" href="{% static 'css/appointment.css' %}" />
+
+    <!-- Date Picker -->
+    <link
+      href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script>
+      $(function () {
+        $("#datePickerId").datepicker({
+          minDate: 0,
+          maxDate: "+1M",
+          dateFormat: "yy-mm-dd",
+          beforeShowDay: function (date) {
+            var day = date.getDay();
+            return [day != 0];
+          },
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function () {
+        $("#submit-btn").click(function (event) {
+          var typeValue = $("#timeId").val();
+          var typeInt = parseInt(typeValue);
+          if (typeInt >= 14 && typeInt <= 16) {
+            event.preventDefault();
+            alert("Please enter a time outside the range 14-16.");
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    {% include 'header.html' %}
+    <br /><br /><br /><br /><br />
+    <div class="one">
+      <h1>Book appointment</h1>
+    </div>
+    <div class="container">
+      <form action="{% url 'Appointment-confirm' %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="exampleInputPassword2" class="form-label"
+            >Name <span style="color: red">*</span></label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputPassword2"
+            name="name"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword3" class="form-label"
+            >Contact no <span style="color: red">*</span></label
+          >
+          <input
+            type="tel"
+            class="form-control"
+            id="exampleInputPassword3"
+            name="mobileno"
+            pattern="[0-9]{10}"
+            placeholder="10 digit Phone no"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >Email address <span style="color: red">*</span></label
+          >
+          <input
+            type="email"
+            class="form-control"
+            id="exampleInputEmail1"
+            name="email"
+            aria-describedby="emailHelp"
+            required
+          />
+          <div id="emailHelp" class="form-text">
+            We'll contact you through mail, kindly provide a valid one.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="datePickerId" class="form-label"
+            >Date <span style="color: red">*</span></label
+          >
+          <input
+            type="text"
+            placeholder="yyyy-mm-dd"
+            class="form-control"
+            id="datePickerId"
+            name="date"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="timeId" class="form-label"
+            >Time <span style="color: red">*</span></label
+          >
+          <input
+            type="time"
+            class="form-control"
+            id="timeId"
+            min="09:00"
+            max="20:00"
+            name="time"
+            required
+          />
+          <div id="timeHelp" class="form-text">
+            "Kindly choose a time between 9:00AM and 2:00PM, or 4:00PM and 9:00PM
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="doctors"> Doctor <span style="color: red">*</span></label>
+          <select
+            class="form-select"
+            aria-label="doctors"
+            id="doc"
+            name="doctor"
+          >
+            <option selected value="Dr. Veni N">Dr. Veni N</option>
+          </select>
+        </div>
+        <button type="submit" id="submit-btn" class="btn btn-primary">
+          Submit
+        </button>
+      </form>
+    </div>
+    <br /><br />
+  </body>
+</html>

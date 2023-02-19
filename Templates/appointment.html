@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" description="Book your appointment at VR Chest and Women Care.">
+  <link rel="icon" href="{% static 'img/logo.png' %}">
+  <title>Book Appointment | VR Chest and Women Care</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+
+  <!-- css -->
+  <link rel="stylesheet" href="{% static 'css/appointment.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+  {% include 'header.html' %}
+
+  <br><br><br><br><br><br>
+  <div class="one">
+    <h1>Book Appointment</h1>
+  </div>
+  <br><br>
+  <div class="container doc">
+    <div class="doc1 row offset-2 col-8">
+      <div class="col-12 mb-2" style="display:flex;flex-direction:column;align-items:center;text-align: center;">
+        <img src="{% static 'img/vasu.jpg' %}" alt="doctor_image" loading="lazy">
+      </div>
+      <div class="col-12" style="display:flex;flex-direction:column;align-items:center;text-align: center;">
+        <p>
+        <h4 class="mb-2">Dr. Vasunethra Kasargod</h4>
+        </p>
+        <p class="mb-2">Consultant Pulmonologist</p>
+        <div class="basic-btn">
+          <a href="{% url 'dr-vasunetra' %}">
+            <button class="btn btn-primary"> Book Appointment </button>
+          </a>
+        </div>
+      </div>
+    </div>
+    <br><br>
+    <div class="doc2 col-8 offset-2">
+      <div class="col-12 mb-2" style="display:flex;flex-direction:column;align-items:center;text-align: center;">
+        <img src="{% static 'img/veni.jpg' %}" alt="doctor_image" loading="lazy">
+      </div>
+      <div class="col-12 col-centered"
+        style="display:flex;flex-direction:column;align-items:center;text-align: center;">
+        <p>
+        <h4 class="mb-2">Dr. Veni N</h4>
+        </p>
+        <p class="mb-2">Consultant Gynecologist</p>
+        <div class="basic-btn">
+          <a href="{% url 'dr-veni' %}">
+            <button class="btn btn-primary"> Book Appointment </button>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <br><br><br>
+</body>
+
+</html>
