@@ -13,11 +13,13 @@ from .forms import ReviewForm, ArticleForm
 from datetime import date, datetime
 from slugify import slugify
 from django.core.mail import send_mail
+from django.conf import settings
+from django.core.mail import EmailMessage
 
 # Create your views here.
 def home(request):
     images = Gallery_Image.objects.all()
-    reviews = Review.objects.all()  
+    reviews = Review.objects.all()
     return render(request,'home.html', {'images':images, 'reviews':reviews})
 
 def saveFeedback(request):
@@ -29,7 +31,7 @@ def saveFeedback(request):
         obj.save()  
         subject = 'VR Chest and Women Care'
         msg='Dear '+name+',\nThank you for your valueable feedback!\n\n Regards, \n VR Chest and Women Care'
-        send_mail(subject, msg , 'karthzz003@gmail.com', [email], fail_silently=True)
+        send_mail(subject, msg , 'support@vrchestandwomencare.com', [email], fail_silently=True)
         messages.info(request,'Thanks for your valuable feedback!')
         return redirect('/')
 
@@ -47,8 +49,23 @@ def appointmentConfirm(request):
         obj= Appointment(Name=name,Mobileno=contact, Email=email, Date=date, Time=time, Doctor=doctor)
         obj.save()
         subject = 'Appointment Request Sent - VR Chest and Women Care'
-        msg = 'Dear '+ name+ ', \njust a quick note to confirm that we have received your appointment request. We will review your request and get back to you as soon as possible.\nThank you.\n\n Regards, \n VR Chest and Women Care'
-        send_mail(subject, msg , 'karthzz003@gmail.com', [email], fail_silently=True)
+
+        #send mail for customer
+        msg = 'Dear '+ name+ ', \nJust a quick note to confirm that we have received your appointment request. We will review your request and get back to you as soon as possible.\nThank you.\n\n Regards, \n VR Chest and Women Care'
+        try:
+            send_mail(subject, msg , 'support@vrchestandwomencare.com', [email], fail_silently=True)
+            print("send")
+        except Exception as e:
+            print("error:",e)
+
+        # send mail for staff
+        staff_subject = 'New Appointment Request'
+        staff_msg = 'Dear Team, \nPlease be advised that a new appointment request has been listed on our system. Kindly review the request and either accept or reject it as soon as possible based on the doctors availability, to help us provide our customers with the best possible experience. \n\nThank you for your cooperation.'
+        try:
+            send_mail(staff_subject, staff_msg , 'jagakundu95@gmail.com', [email], fail_silently=True)
+            print("Staff Mail Sent")
+        except Exception as e:
+            print("Error: ",e)
         messages.info(request,'Appointment Request Sent!')
         return redirect('/')
 
@@ -117,7 +134,7 @@ def requestAccept(request):
         appoint.save()
         subject = 'Appointment Confirmation - VR Chest and Women Care'
         msg = 'Dear '+ appoint.Name + ', \nyour appointment with '+ appoint.Doctor+ ' is scheduled for '+appoint.Date+ ' at '+ appoint.Time+ '. Please arrive 15 minutes early at our office. We look forward to seeing you soon.\n\n Regards, \n VR Chest and Women Care'
-        send_mail(subject, msg , 'karthzz003@gmail.com', [appoint.Email], fail_silently=True)
+        send_mail(subject, msg , 'support@vrchestandwomencare.com', [appoint.Email], fail_silently=True)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     except Exception as e:
         print(e)
@@ -133,7 +150,7 @@ def requestReject(request):
         appoint.save()
         subject = 'Appointment Request Rejected - VR Chest and Women Care'
         msg = 'Dear '+ appoint.Name+', \nwe regret to inform you that we are unable to schedule your appointment at this time as '+appoint.Doctor+ ' is currently unavailable. We apologize for any inconvenience this may cause. Please feel free to contact us if you have any further questions.\n\n Regards, \n VR Chest and Women Care'
-        send_mail(subject, msg , 'karthzz003@gmail.com', [appoint.Email], fail_silently=True)
+        send_mail(subject, msg , 'support@vrchestandwomencare.com', [appoint.Email], fail_silently=True)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     except Exception as e:
         print(e)

@@ -56,3 +56,23 @@
     font-size: 2rem !important;
   }
 }
+
+.basic-btn button {
+  background-color: #17a2c2;
+  padding: 6px 12px;
+  font-weight: normal;
+  border-radius: 50px;
+  border: 1px solid #17a2c2;
+}
+
+.basic-btn button:hover {
+  border: 2px solid #17a2c2 !important;
+  background-color: #fff !important;
+  color: #17a2c2 !important;
+}
+
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+}

@@ -21,9 +21,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link rel="icon" href="{% static 'img/logo.png' %}">
+  <link rel="icon" href="{% static 'img/logo.png' %}">
   <title>VR Chest and Women Care</title>
 
+  <style>
+    a{
+      text-decoration: none;
+    }
+  </style>
 
   <!-- Google Reviews -->
  
@@ -46,9 +51,7 @@
     <div class="headers containers">
       <div class="nav-bars">
         <div class="brands">
-
           <img src="{% static 'img/logo.png' %}" alt="logo">
-
         </div>
         <div class="nav-lists">
           <div class="hamburger">
@@ -198,7 +201,7 @@
           <div class="card-body">
             <h5 class="card-title">Dr. Veni N</h5>
             <h6>MBBD MD DNB FNAMS</h6>
-            <h6>Consultant Gynecologist</h6>
+            <h6>Consultant Gynaecologist</h6>
             <center>
               <div class="know-more-btn"> 
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -252,17 +255,17 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            Dr. Veni Nekkilady is a gynecologist whose main area of interest includes
+            Dr. Veni Nekkilady is a Gynaecologist whose main area of interest includes
             laparoscopy and high-risk pregnancy. She graduated from the prestigious
             Bangalore medical college and went on to be a rank holder in AIIMS Delhi from
             where she attained her specialty in gynecology. At AIIMS, she was guided by the
-            best gynecologists in India and treated various patients suffering from infertility,
+            best Gynaecologists in India and treated various patients suffering from infertility,
             high-risk pregnancy, and cancer, catering to patients from all over India. Her
             passion was to learn the art of healing. She went on to advanced training in
             laparoscopy surgery from Kochi, Kerala. She has worked as an Assistant professor
             at St. Johns medical college and MS Ramiah Medical College, Bangalore for 5
             years. She has been associated with Cloud Nine and Motherhood Hospitals for 4
-            years as a Consultant Gynecologist.
+            years as a Consultant Gynaecologist.
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -390,47 +393,27 @@
     </div>
  
     <div class="contact container">
-
-      {% comment %} <div class="flexcontact">
-        <div>
-          <a href="tel:08048903353">
-            <button class="btn btn-primary"><i class="fa fa-phone fa-shake" style="font-size:24px;"></i> : 080 -
-              48903353</button>
-          </a>
-        </div>
-        <div>
-          <a href="tel:9742532343">
-            <button class="btn btn-primary"><i class="fa fa-phone fa-shake" style="font-size:24px;"></i> : 97425
-              32343</button>
-          </a>
-        </div>
-        <div>
-          <a href="">
-            <button class="btn btn-primary"><i class="fa fa-envelope" style="font-size:24px;"></i> : abcd@gmail.com
-            </button>
-          </a>
-        </div>
-      </div> {% endcomment %}
       <div class="row">
         <div class="col-md-4">
           <div class="info address mb-3">
-            <a href="https://goo.gl/maps/XPnKH2LhfzsezZUL9">
+            <a href="https://goo.gl/maps/XPnKH2LhfzsezZUL9" target="_blank">
               <i class="fas fa-map-marker-alt"></i>
+              <h4>Location</h4>
+              <p>VR CHEST AND WOMEN CARE
+                No.356, Abhilash Complex, Hennur Main Rd, opposite BLOCK-1, Bengaluru, Karnataka 560043</p>
             </a>
-            <h4>Location</h4>
-            <p>VR CHEST AND WOMEN CARE
-              No.356, Abhilash Complex, Hennur Main Rd, opposite BLOCK-1, Bengaluru, Karnataka 560043</p>
           </div>
           <div class="email info mb-3">
-            <a href="mailto:"><i class="fa-solid fa-envelope"></i></a>
-            <h4>Email:</h4>
-            <p>vrchest@gmail.com</p>
+            <a href="mailto:support@vrchestandwomencare.com" target="_blank"><i class="fa-solid fa-envelope"></i>
+              <h4>Email:</h4>
+              <p>support@vrchestandwomencare.com</p>
+            </a>
           </div>
           <div class="mobile info">
             <a href="tel:+919742532343"><i class="fa-solid fa-phone"></i></a>
-            <h4>Phone:</h4>
-            <p class="mb-1">9742532343</p>
-            <p>08048903353</p>
+              <h4>Phone:</h4>
+              <p class="mb-1">9742532343</p>
+              <p>08048903353</p>
           </div>
         </div>
         <div class="col-md-8">
@@ -465,7 +448,7 @@
 
         </div>
         <div class="col-10 col-sm-10 col-md-10 col-lg-10  offset-1 col-centered">
-          <label for="exampleFormControlTextarea1" class="form-label">Messege <span style="color:red">*</span></label>
+          <label for="exampleFormControlTextarea1" class="form-label">Message <span style="color:red">*</span></label>
           <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="msg"></textarea>
         </div>
         <div class="col-10 col-sm-10 col-md-10 col-lg-10 offset-1 col-centered">
