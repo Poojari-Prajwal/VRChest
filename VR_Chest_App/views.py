@@ -32,7 +32,7 @@ def saveFeedback(request):
         subject = 'VR Chest and Women Care'
         msg='Dear '+name+',\nThank you for your valueable feedback!\n\n Regards, \n VR Chest and Women Care'
         send_mail(subject, msg , 'support@vrchestandwomencare.com', [email], fail_silently=True)
-        messages.info(request,'Thanks for your valuable feedback!')
+        messages.success(request,'Thanks for your valuable feedback!')
         return redirect('/')
 
 def appointment(request):
@@ -49,24 +49,21 @@ def appointmentConfirm(request):
         obj= Appointment(Name=name,Mobileno=contact, Email=email, Date=date, Time=time, Doctor=doctor)
         obj.save()
         subject = 'Appointment Request Sent - VR Chest and Women Care'
-
-        #send mail for customer
         msg = 'Dear '+ name+ ', \nJust a quick note to confirm that we have received your appointment request. We will review your request and get back to you as soon as possible.\nThank you.\n\n Regards, \n VR Chest and Women Care'
+        #send mail for customer
         try:
-            send_mail(subject, msg , 'support@vrchestandwomencare.com', [email], fail_silently=True)
-            print("send")
+            send_mail(subject, msg, 'support@vrchestandwomencare.com', [email])
+            # send mail for staff
+            staff_subject = 'New Appointment Request'
+            staff_msg = 'Dear Team, \nPlease be advised that a new appointment request has been listed on our system. Kindly review the request and either accept or reject it as soon as possible based on the doctors availability, to help us provide our customers with the best possible experience. \n\nThank you for your cooperation.'
+            try:
+                send_mail(staff_subject, staff_msg , 'support@vrchestandwomencare.com', ['jagakundu95@gmail.com'])
+            except Exception as e:
+                print(e)
+            messages.success(request,'Appointment Request Sent!')
         except Exception as e:
-            print("error:",e)
-
-        # send mail for staff
-        staff_subject = 'New Appointment Request'
-        staff_msg = 'Dear Team, \nPlease be advised that a new appointment request has been listed on our system. Kindly review the request and either accept or reject it as soon as possible based on the doctors availability, to help us provide our customers with the best possible experience. \n\nThank you for your cooperation.'
-        try:
-            send_mail(staff_subject, staff_msg , 'jagakundu95@gmail.com', [email], fail_silently=True)
-            print("Staff Mail Sent")
-        except Exception as e:
-            print("Error: ",e)
-        messages.info(request,'Appointment Request Sent!')
+            messages.error(request,'Failed to send the appointment request.')
+            print(e)
         return redirect('/')
 
 @csrf_exempt
