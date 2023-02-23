@@ -4,7 +4,11 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" description="Check out the articles related to mediacl fields - Pulmonology and Gynecology written by the doctors of VR Chest and Women Care."/>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+      description="Check out the articles related to mediacl fields - Pulmonology and Gynecology written by the doctors of VR Chest and Women Care."
+    />
     <link rel="icon" href="{% static 'img/logo.png' %}" />
     <title>Articles | VR Chest and Women Care</title>
     <link
@@ -52,7 +56,7 @@
         </div>
         <br /><br />
         <div class="art">
-          {% for article in articles %}
+          {% if articles %} {% for article in articles %}
           <div>
             <h4>{{ article.title }}</h4>
             <p>{{ article.content | slice:":200"}}...</p>
@@ -61,7 +65,9 @@
             </a>
           </div>
           <br />
-          {% endfor %}
+          {% endfor %} {%else%}
+          <p style="text-align: center">No articles to show</p>
+          {% endif %}
         </div>
       </div>
     </section>

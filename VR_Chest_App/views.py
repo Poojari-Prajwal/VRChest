@@ -130,7 +130,7 @@ def requestAccept(request):
         appoint.RequestStatus=2
         appoint.save()
         subject = 'Appointment Confirmation - VR Chest and Women Care'
-        msg = 'Dear '+ appoint.Name + ', \nyour appointment with '+ appoint.Doctor+ ' is scheduled for '+appoint.Date+ ' at '+ appoint.Time+ '. Please arrive 15 minutes early at our office. We look forward to seeing you soon.\n\n Regards, \n VR Chest and Women Care'
+        msg = 'Dear '+ appoint.Name + ', \nyour appointment with '+ appoint.Doctor+ ' is scheduled for '+ str(appoint.Date)+ ' at '+ str(appoint.Time)+ '. Please arrive 15 minutes early at our office. We look forward to seeing you soon.\n\n Regards, \n VR Chest and Women Care'
         send_mail(subject, msg , 'support@vrchestandwomencare.com', [appoint.Email], fail_silently=True)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     except Exception as e:
