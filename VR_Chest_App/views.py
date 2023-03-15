@@ -8,13 +8,14 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from .forms import ReviewForm, ArticleForm
 from datetime import date, datetime
 from slugify import slugify
 from django.core.mail import send_mail
 from django.conf import settings
 from django.core.mail import EmailMessage
+import json
 
 # Create your views here.
 def home(request):
@@ -44,27 +45,80 @@ def appointmentConfirm(request):
         contact=request.POST.get('mobileno')
         email=request.POST.get('email')
         date=request.POST.get('date')
-        time=request.POST.get('time')
+        time_slots=request.POST.get('timeSlot')
         doctor=request.POST.get('doctor')
-        obj= Appointment(Name=name,Mobileno=contact, Email=email, Date=date, Time=time, Doctor=doctor)
+        obj= Appointment(Name=name,Mobileno=contact, Email=email, Date=date, TimeSlots=time_slots, Doctor=doctor)
         obj.save()
-        subject = 'Appointment Request Sent - VR Chest and Women Care'
-        msg = 'Dear '+ name+ ', \nJust a quick note to confirm that we have received your appointment request. We will review your request and get back to you as soon as possible.\nThank you.\n\n Regards, \n VR Chest and Women Care'
-        #send mail for customer
-        try:
-            send_mail(subject, msg, 'support@vrchestandwomencare.com', [email])
-            # send mail for staff
-            staff_subject = 'New Appointment Request'
-            staff_msg = 'Dear Team, \nPlease be advised that a new appointment request has been listed on our system. Kindly review the request and either accept or reject it as soon as possible based on the doctors availability, to help us provide our customers with the best possible experience. \n\nThank you for your cooperation.'
-            try:
-                send_mail(staff_subject, staff_msg , 'support@vrchestandwomencare.com', ['jagakundu95@gmail.com'])
-            except Exception as e:
-                print(e)
-            messages.success(request,'Appointment Request Sent!')
-        except Exception as e:
-            messages.error(request,'Failed to send the appointment request.')
-            print(e)
+        # subject = 'Appointment Request Sent - VR Chest and Women Care'
+        # msg = 'Dear '+ name+ ', \nJust a quick note to confirm that we have received your appointment request. We will review your request and get back to you as soon as possible.\nThank you.\n\n Regards, \n VR Chest and Women Care'
+        # #send mail for customer
+        # try:
+        #     send_mail(subject, msg, 'support@vrchestandwomencare.com', [email])
+        #     # send mail for staff
+        #     staff_subject = 'New Appointment Request'
+        #     staff_msg = 'Dear Team, \nPlease be advised that a new appointment request has been listed on our system. Kindly review the request and either accept or reject it as soon as possible based on the doctors availability, to help us provide our customers with the best possible experience. \n\nThank you for your cooperation.'
+        #     try:
+        #         send_mail(staff_subject, staff_msg , 'support@vrchestandwomencare.com', ['jagakundu95@gmail.com'])
+        #     except Exception as e:
+        #         print(e)
+        #     messages.success(request,'Appointment Request Sent!')
+        # except Exception as e:
+        #     messages.error(request,'Failed to send the appointment request.')
+        #     print(e)
         return redirect('/')
+
+def get_available_time_slots(request):
+    if request.method == "GET":
+        selected_date = request.GET.get("date")
+        doctor = request.GET.get("doctor")
+    
+        # Get the appointments for the selected date and doctor
+        appointments = Appointment.objects.filter(Date=selected_date, Doctor=doctor)
+
+        # Get the available slots for the selected doctor
+        available_slots = get_doctor_time_slots(doctor)
+
+        if appointments:
+            # If there are existing appointments, mark the corresponding time slots as unavailable
+            for appointment in appointments:
+                for slot in available_slots:
+                    if slot["time_slot"] in appointment.TimeSlots:
+                        slot["is_available"] = False
+
+        return JsonResponse(available_slots, safe=False)
+    else:
+        return HttpResponseNotAllowed(["GET"])
+
+
+# Returns respective time slots for doctor
+def get_doctor_time_slots(doctor):
+    doctor_time_slots = {
+        "Dr. Vasunethra Kasargod": [
+            {"time_slot": "5pm", "is_available": True},
+            {"time_slot": "5:30pm", "is_available": True},
+            {"time_slot": "6pm", "is_available": True},
+            {"time_slot": "6:30pm", "is_available": True},
+            {"time_slot": "7pm", "is_available": True},
+            {"time_slot": "7:30pm", "is_available": True},
+            {"time_slot": "8pm", "is_available": True},
+            {"time_slot": "8:30pm", "is_available": True},
+        ],
+        "Dr. Veni N": [
+            {"time_slot": "11am", "is_available": True},
+            {"time_slot": "11:30am", "is_available": True},
+            {"time_slot": "12pm", "is_available": True},
+            {"time_slot": "12:30pm", "is_available": True},
+            {"time_slot": "1pm", "is_available": True},
+            {"time_slot": "1:30pm", "is_available": True},
+            {"time_slot": "4pm", "is_available": True},
+            {"time_slot": "4:30pm", "is_available": True},
+            {"time_slot": "5pm", "is_available": True},
+            {"time_slot": "5:30pm", "is_available": True},
+            {"time_slot": "6pm", "is_available": True},
+            {"time_slot": "6:30pm", "is_available": True},
+        ],
+    }
+    return doctor_time_slots[doctor]
 
 @csrf_exempt
 def logins(request):
@@ -98,12 +152,12 @@ def showAppointments (request):
     all_appointments = Appointment.objects.all() 
     vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod")
     veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N")
-    app_all_new = sorted(all_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    app_all_old = sorted(all_appointments, key=lambda x: (x.Date, x.Time))
-    vasu_new = sorted(vasu_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    vasu_old = sorted(vasu_appointments, key=lambda x: (x.Date, x.Time))
-    veni_new= sorted(veni_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    veni_old = sorted(veni_appointments, key=lambda x: (x.Date, x.Time))
+    app_all_new = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+    app_all_old = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots))
+    vasu_new = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+    vasu_old = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots))
+    veni_new= sorted(veni_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+    veni_old = sorted(veni_appointments, key=lambda x: (x.Date, x.TimeSlots))
     return render(request, 'showAppointments.html', {'app_all_new':app_all_new,'app_all_old':app_all_old,'vasu_new':vasu_new,'vasu_old':vasu_old,'veni_new':veni_new,'veni_old':veni_old})
 
 
@@ -131,7 +185,7 @@ def requestAccept(request):
         appoint.save()
         subject = 'Appointment Confirmation - VR Chest and Women Care'
         msg = 'Dear '+ appoint.Name + ', \nyour appointment with '+ appoint.Doctor+ ' is scheduled for '+ str(appoint.Date)+ ' at '+ str(appoint.Time)+ '. Please arrive 15 minutes early at our office. We look forward to seeing you soon.\n\n Regards, \n VR Chest and Women Care'
-        send_mail(subject, msg , 'support@vrchestandwomencare.com', [appoint.Email], fail_silently=True)
+        # send_mail(subject, msg , 'support@vrchestandwomencare.com', [appoint.Email], fail_silently=True)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     except Exception as e:
         print(e)
@@ -147,7 +201,7 @@ def requestReject(request):
         appoint.save()
         subject = 'Appointment Request Rejected - VR Chest and Women Care'
         msg = 'Dear '+ appoint.Name+', \nwe regret to inform you that we are unable to schedule your appointment at this time as '+appoint.Doctor+ ' is currently unavailable. We apologize for any inconvenience this may cause. Please feel free to contact us if you have any further questions.\n\n Regards, \n VR Chest and Women Care'
-        send_mail(subject, msg , 'support@vrchestandwomencare.com', [appoint.Email], fail_silently=True)
+        # send_mail(subject, msg , 'support@vrchestandwomencare.com', [appoint.Email], fail_silently=True)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     except Exception as e:
         print(e)

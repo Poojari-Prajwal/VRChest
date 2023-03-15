@@ -6,6 +6,7 @@ urlpatterns = [
     path('saveFeedback/',views.saveFeedback, name='saveFeedback'),
     path('book-appointment', views.appointment, name='book-appointment'),
     path('Appointment-confirm', views.appointmentConfirm, name='Appointment-confirm'),
+    path('get_available_time_slots', views.get_available_time_slots, name='get_available_time_slots'),
     path('staff', views.staff, name='staff'),
     path('login', views.logins, name='login'),
     path('logout', views.logout, name='logout'),
@@ -37,5 +38,5 @@ urlpatterns = [
     path('articles/<article_slug>', views.individualArticle, name='individual-article'),
     path('appointments/dr-vasunetra', views.vasuAppointments, name='dr-vasunetra'),
     path('appointments/dr-veni', views.veniAppointments, name='dr-veni'),
-    path('show-today-appointments', views.showTodayAppointments, name='show-today-appointments')
+    path('show-today-appointments', views.showTodayAppointments, name='show-today-appointments'),
 ]

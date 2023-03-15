@@ -1,69 +1,75 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{% static 'img/logo.png' %}">
-  <title>All Appointments</title>
-    
- <!-- Bootstrap -->
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{% static 'img/logo.png' %}" />
+    <title>All Appointments</title>
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- CSS -->
     <style>
-        h1
-        {
-            text-align: center;
-        }
-        table, th, td
-        {
-            border:2px solid black;
-            border-collapse: collapse;
-        }
-        table 
-        {
-            margin-left:auto;
-            margin-right: auto;
-            margin-top:30px;
-        }
-        th,td 
-        {
-            padding:10px;
-        }
-        input.btn
-        {
-            padding:5px;
-            border:2px solid blue;
-        }
-        .btn:hover 
-        {
-            background-color: blue;
-            transition: 0.7s;
-            color:white;
-        }
-     select
-     {
-        height:50px;
-        width:100%;
-     }
-     .bttn 
-     {
-        height:50px;
-        width:200px;
-     }
-     .offcanvas-body
-     {
+      h1 {
+        text-align: center;
+      }
+      table,
+      th,
+      td {
+        border: 2px solid black;
+        border-collapse: collapse;
+      }
+      table {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 30px;
+      }
+      th,
+      td {
+        padding: 10px;
+      }
+      input.btn {
+        padding: 5px;
+        border: 2px solid blue;
+      }
+      .btn:hover {
+        background-color: blue;
+        transition: 0.7s;
+        color: white;
+      }
+      select {
+        height: 50px;
+        width: 100%;
+      }
+      .bttn {
+        height: 50px;
+        width: 200px;
+      }
+      .offcanvas-body {
         justify-content: space-around;
         column-gap: 10px;
-     }
-     .all_app_old, .vasu_new, .vasu_old, .veni_new, .veni_old 
-     {
-        display:none;
-     }
-     .one h1 {
+      }
+      .all_app_old,
+      .vasu_new,
+      .vasu_old,
+      .veni_new,
+      .veni_old {
+        display: none;
+      }
+      .one h1 {
         text-align: center;
         text-transform: uppercase;
         padding-bottom: 5px;
@@ -97,7 +103,7 @@
         margin-top: 25px;
         left: 50%;
         margin-left: -50px;
-        background-color: #17a2c2
+        background-color: #17a2c2;
       }
       @media screen and (max-width: 480px) {
         .one h1 {
@@ -110,404 +116,454 @@
         }
       }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     {% include 'headerstaff.html' %}
-    
-    <br><br><br><br><br>
+
+    <br /><br /><br /><br /><br />
     <div class="one">
-        <h1> All Appointments</h1>
+      <h1>All Appointments</h1>
     </div>
-    <br>
+    <br />
     {% if app_all_new %}
-    <div class="container" style="margin-bottom:15px;display:flex;justify-content:flex-start;flex-direction:row;">
-    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">filter</button>
+    <div
+      class="container"
+      style="
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: row;
+      "
+    >
+      <button
+        class="btn btn-primary"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasBottom"
+        aria-controls="offcanvasBottom"
+      >
+        filter
+      </button>
     </div>
-            <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasBottomLabel">Filter</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body small" style="display:flex;">
-                <label for="time"></label>
-                <select class="form-select" aria-label="time" id="time" >
-                    <option selected value=1>Newest first</option>
-                    <option value=2>Oldest first</option>
-                  </select>
-                  <label for="doctors"></label>
-                  <select class="form-select" aria-label="doctors" id="doc">
-                    <option selected value=1>Both Doctors</option>
-                    <option value=2>Dr. Vasunethra Kasargod</option>
-                    <option value=3>Dr. Veni N</option>
-                  </select>
-                  <button class="btn btn-primary bttn" type="button" onclick="filter()" data-bs-dismiss="offcanvas">Filter</button>
-            </div>
-            </div>
-    <div class="container all_app_new " id="all_app_new">
-        <div style="display:flex;justify-content:flex-start;">
-        <input type="button" onclick="generate1()" value="Export PDF" class="btn"/>
+    <div
+      class="offcanvas offcanvas-bottom"
+      tabindex="-1"
+      id="offcanvasBottom"
+      aria-labelledby="offcanvasBottomLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Filter</h5>
+        <button
+          type="button"
+          class="btn-close text-reset"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body small" style="display: flex">
+        <label for="time"></label>
+        <select class="form-select" aria-label="time" id="time">
+          <option selected value="1">Newest first</option>
+          <option value="2">Oldest first</option>
+        </select>
+        <label for="doctors"></label>
+        <select class="form-select" aria-label="doctors" id="doc">
+          <option selected value="1">Both Doctors</option>
+          <option value="2">Dr. Vasunethra Kasargod</option>
+          <option value="3">Dr. Veni N</option>
+        </select>
+        <button
+          class="btn btn-primary bttn"
+          type="button"
+          onclick="filter()"
+          data-bs-dismiss="offcanvas"
+        >
+          Filter
+        </button>
+      </div>
     </div>
-        <div class="appointment" style="overflow-x:auto;min-width:350px;padding:15px;">
-            <table id="appointmentTable1">
-                <tr>
-                    <th>Sl no.</th>
-                  <th>Name</th>
-                  <th> Mobile no</th>
-                  <th>Email id</th>
-                  <th>Date</th>
-                  <th> Time</th>
-                  <th>Doctor</th> 
-                 
-                </tr>
-                {% for appointment in app_all_new %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{appointment.Name}}</td>
-                    <td>{{appointment.Mobileno}}</td>
-                    <td>{{appointment.Email}}</td>
-                    <td>{{appointment.Date}}</td>
-                    <td>{{appointment.Time}} </td>
-                    <td>{{appointment.Doctor}}</td>
-                    
-                </tr>
-                {% endfor %}
-            </table>
-        </div> 
-        
+    <div class="container all_app_new" id="all_app_new">
+      <div style="display: flex; justify-content: flex-start">
+        <input
+          type="button"
+          onclick="generate1()"
+          value="Export PDF"
+          class="btn"
+        />
+      </div>
+      <div
+        class="appointment"
+        style="overflow-x: auto; min-width: 350px; padding: 15px"
+      >
+        <table id="appointmentTable1">
+          <tr>
+            <th>Sl no.</th>
+            <th>Name</th>
+            <th>Mobile no</th>
+            <th>Email id</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Doctor</th>
+          </tr>
+          {% for appointment in app_all_new %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{appointment.Name}}</td>
+            <td>{{appointment.Mobileno}}</td>
+            <td>{{appointment.Email}}</td>
+            <td>{{appointment.Date}}</td>
+            <td>{{appointment.TimeSlots}}</td>
+            <td>{{appointment.Doctor}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
     </div>
 
-    <div class="container all_app_old " id="all_app_old">
-        <input type="button" onclick="generate2()" value="Export PDF" class="btn"/>
-        <div class="appointment" style="overflow-x:auto;min-width:350px;padding:15px;">
-            <table id="appointmentTable2">
-                <tr>
-                    <th>Sl no.</th>
-                  <th>Name</th>
-                  <th> Mobile no</th>
-                  <th>Email id</th>
-                  <th>Date</th>
-                  <th> Time</th>
-                  <th>Doctor</th>  
-                  
-                </tr>
-                {% for appointment in app_all_old %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{appointment.Name}}</td>
-                    <td>{{appointment.Mobileno}}</td>
-                    <td>{{appointment.Email}}</td>
-                    <td>{{appointment.Date}}</td>
-                    <td>{{appointment.Time}} </td>
-                    <td>{{appointment.Doctor}}</td>
-                    
-                </tr>
-                {% endfor %}
-            </table>
-        </div> 
-        
+    <div class="container all_app_old" id="all_app_old">
+      <input
+        type="button"
+        onclick="generate2()"
+        value="Export PDF"
+        class="btn"
+      />
+      <div
+        class="appointment"
+        style="overflow-x: auto; min-width: 350px; padding: 15px"
+      >
+        <table id="appointmentTable2">
+          <tr>
+            <th>Sl no.</th>
+            <th>Name</th>
+            <th>Mobile no</th>
+            <th>Email id</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Doctor</th>
+          </tr>
+          {% for appointment in app_all_old %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{appointment.Name}}</td>
+            <td>{{appointment.Mobileno}}</td>
+            <td>{{appointment.Email}}</td>
+            <td>{{appointment.Date}}</td>
+            <td>{{appointment.TimeSlots}}</td>
+            <td>{{appointment.Doctor}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
     </div>
-    <div class="container vasu_new " id="vasu_new">
-        <input type="button" onclick="generate3()" value="Export PDF" class="btn"/>
-        <div class="appointment" style="overflow-x:auto;min-width:350px;padding:15px;">
-            <table id="appointmentTable3">
-                <tr>
-                    <th>Sl no.</th>
-                  <th>Name</th>
-                  <th> Mobile no</th>
-                  <th>Email id</th>
-                  <th>Date</th>
-                  <th> Time</th>
-                  <th>Doctor</th> 
- 
-                </tr>
-                {% for appointment in vasu_new %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{appointment.Name}}</td>
-                    <td>{{appointment.Mobileno}}</td>
-                    <td>{{appointment.Email}}</td>
-                    <td>{{appointment.Date}}</td>
-                    <td>{{appointment.Time}} </td>
-                    <td>{{appointment.Doctor}}</td>
-                    
-                </tr>
-                {% endfor %}
-            </table>
-        </div> 
-        
+    <div class="container vasu_new" id="vasu_new">
+      <input
+        type="button"
+        onclick="generate3()"
+        value="Export PDF"
+        class="btn"
+      />
+      <div
+        class="appointment"
+        style="overflow-x: auto; min-width: 350px; padding: 15px"
+      >
+        <table id="appointmentTable3">
+          <tr>
+            <th>Sl no.</th>
+            <th>Name</th>
+            <th>Mobile no</th>
+            <th>Email id</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Doctor</th>
+          </tr>
+          {% for appointment in vasu_new %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{appointment.Name}}</td>
+            <td>{{appointment.Mobileno}}</td>
+            <td>{{appointment.Email}}</td>
+            <td>{{appointment.Date}}</td>
+            <td>{{appointment.TimeSlots}}</td>
+            <td>{{appointment.Doctor}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
     </div>
-    <div class="container vasu_old " id="vasu_old">
-        <input type="button" onclick="generate4()" value="Export PDF" class="btn"/>
-        <div class="appointment" style="overflow-x:auto;min-width:350px;padding:15px;">
-            <table id="appointmentTable4">
-                <tr>
-                    <th>Sl no.</th>
-                  <th>Name</th>
-                  <th> Mobile no</th>
-                  <th>Email id</th>
-                  <th>Date</th>
-                  <th> Time</th>
-                  <th>Doctor</th>  
-                </tr>
-                {% for appointment in vasu_old %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{appointment.Name}}</td>
-                    <td>{{appointment.Mobileno}}</td>
-                    <td>{{appointment.Email}}</td>
-                    <td>{{appointment.Date}}</td>
-                    <td>{{appointment.Time}} </td>
-                    <td>{{appointment.Doctor}}</td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div> 
-        
+    <div class="container vasu_old" id="vasu_old">
+      <input
+        type="button"
+        onclick="generate4()"
+        value="Export PDF"
+        class="btn"
+      />
+      <div
+        class="appointment"
+        style="overflow-x: auto; min-width: 350px; padding: 15px"
+      >
+        <table id="appointmentTable4">
+          <tr>
+            <th>Sl no.</th>
+            <th>Name</th>
+            <th>Mobile no</th>
+            <th>Email id</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Doctor</th>
+          </tr>
+          {% for appointment in vasu_old %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{appointment.Name}}</td>
+            <td>{{appointment.Mobileno}}</td>
+            <td>{{appointment.Email}}</td>
+            <td>{{appointment.Date}}</td>
+            <td>{{appointment.TimeSlots}}</td>
+            <td>{{appointment.Doctor}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
     </div>
-    <div class="container veni_new " id="veni_new">
-        <input type="button" onclick="generate5()" value="Export PDF" class="btn"/>
-        <div class="appointment" style="overflow-x:auto;min-width:350px;padding:15px;">
-            <table id="appointmentTable5">
-                <tr>
-                    <th>Sl no.</th>
-                  <th>Name</th>
-                  <th> Mobile no</th>
-                  <th>Email id</th>
-                  <th>Date</th>
-                  <th> Time</th>
-                  <th>Doctor</th>  
-                </tr>
-                {% for appointment in veni_new %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{appointment.Name}}</td>
-                    <td>{{appointment.Mobileno}}</td>
-                    <td>{{appointment.Email}}</td>
-                    <td>{{appointment.Date}}</td>
-                    <td>{{appointment.Time}} </td>
-                    <td>{{appointment.Doctor}}</td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div> 
-        
+    <div class="container veni_new" id="veni_new">
+      <input
+        type="button"
+        onclick="generate5()"
+        value="Export PDF"
+        class="btn"
+      />
+      <div
+        class="appointment"
+        style="overflow-x: auto; min-width: 350px; padding: 15px"
+      >
+        <table id="appointmentTable5">
+          <tr>
+            <th>Sl no.</th>
+            <th>Name</th>
+            <th>Mobile no</th>
+            <th>Email id</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Doctor</th>
+          </tr>
+          {% for appointment in veni_new %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{appointment.Name}}</td>
+            <td>{{appointment.Mobileno}}</td>
+            <td>{{appointment.Email}}</td>
+            <td>{{appointment.Date}}</td>
+            <td>{{appointment.TimeSlots}}</td>
+            <td>{{appointment.Doctor}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
     </div>
-    <div class="container veni_old " id="veni_old">
-        <input type="button" onclick="generate6()" value="Export PDF" class="btn"/>
-        <div class="appointment" style="overflow-x:auto;min-width:350px;padding:15px;">
-            <table id="appointmentTable6">
-                <tr>
-                    <th>Sl no.</th>
-                  <th>Name</th>
-                  <th> Mobile no</th>
-                  <th>Email id</th>
-                  <th>Date</th>
-                  <th> Time</th>
-                  <th>Doctor</th>  
-                </tr>
-                {% for appointment in veni_old %}
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-                    <td>{{appointment.Name}}</td>
-                    <td>{{appointment.Mobileno}}</td>
-                    <td>{{appointment.Email}}</td>
-                    <td>{{appointment.Date}}</td>
-                    <td>{{appointment.Time}} </td>
-                    <td>{{appointment.Doctor}}</td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div> 
-        
+    <div class="container veni_old" id="veni_old">
+      <input
+        type="button"
+        onclick="generate6()"
+        value="Export PDF"
+        class="btn"
+      />
+      <div
+        class="appointment"
+        style="overflow-x: auto; min-width: 350px; padding: 15px"
+      >
+        <table id="appointmentTable6">
+          <tr>
+            <th>Sl no.</th>
+            <th>Name</th>
+            <th>Mobile no</th>
+            <th>Email id</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Doctor</th>
+          </tr>
+          {% for appointment in veni_old %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{appointment.Name}}</td>
+            <td>{{appointment.Mobileno}}</td>
+            <td>{{appointment.Email}}</td>
+            <td>{{appointment.Date}}</td>
+            <td>{{appointment.TimeSlots}}</td>
+            <td>{{appointment.Doctor}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
     </div>
     {% else %}
-    <h4 style="text-align:center; margin-top:50px">No Appontments</h4>
+    <h4 style="text-align: center; margin-top: 50px">No Appontments</h4>
     {% endif %}
-<br><br>
+    <br /><br />
     <!-- PDF scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
 
     <script>
-        function filter() 
-{
-    var t = document.getElementById("time").value;
-    var d = document.getElementById("doc").value;
-    if ( t==1 && d==1)
-    {
-        //show
-        document.getElementById("all_app_new").style.display = "block";
+      function filter() {
+        var t = document.getElementById("time").value;
+        var d = document.getElementById("doc").value;
+        if (t == 1 && d == 1) {
+          //show
+          document.getElementById("all_app_new").style.display = "block";
 
-        //hide
-        document.getElementById("vasu_new").style.display = "none";
-        document.getElementById("veni_new").style.display = "none";
-        document.getElementById("all_app_old").style.display = "none";
-        document.getElementById("vasu_old").style.display = "none";
-        document.getElementById("veni_old").style.display = "none";
-    }
-    if( t==1 && d==2)
-    {
-        //show
-        document.getElementById("vasu_new").style.display = "block";
+          //hide
+          document.getElementById("vasu_new").style.display = "none";
+          document.getElementById("veni_new").style.display = "none";
+          document.getElementById("all_app_old").style.display = "none";
+          document.getElementById("vasu_old").style.display = "none";
+          document.getElementById("veni_old").style.display = "none";
+        }
+        if (t == 1 && d == 2) {
+          //show
+          document.getElementById("vasu_new").style.display = "block";
 
-        //hide
-        document.getElementById("all_app_new").style.display = "none";
-        document.getElementById("veni_new").style.display = "none";
-        document.getElementById("all_app_old").style.display = "none";
-        document.getElementById("vasu_old").style.display = "none";
-        document.getElementById("veni_old").style.display = "none";
-    }
-    if(t==1 && d==3)
-    {
-        //show
-        document.getElementById("veni_new").style.display = "block";
+          //hide
+          document.getElementById("all_app_new").style.display = "none";
+          document.getElementById("veni_new").style.display = "none";
+          document.getElementById("all_app_old").style.display = "none";
+          document.getElementById("vasu_old").style.display = "none";
+          document.getElementById("veni_old").style.display = "none";
+        }
+        if (t == 1 && d == 3) {
+          //show
+          document.getElementById("veni_new").style.display = "block";
 
-        //hide
-        document.getElementById("all_app_new").style.display = "none";
-        document.getElementById("vasu_new").style.display = "none";
-        document.getElementById("all_app_old").style.display = "none";
-        document.getElementById("vasu_old").style.display = "none";
-        document.getElementById("veni_old").style.display = "none";
-    }
-    if(t==2 && d==1)
-    {
-        //show
-        document.getElementById("all_app_old").style.display = "block";
+          //hide
+          document.getElementById("all_app_new").style.display = "none";
+          document.getElementById("vasu_new").style.display = "none";
+          document.getElementById("all_app_old").style.display = "none";
+          document.getElementById("vasu_old").style.display = "none";
+          document.getElementById("veni_old").style.display = "none";
+        }
+        if (t == 2 && d == 1) {
+          //show
+          document.getElementById("all_app_old").style.display = "block";
 
-        //hide
-        document.getElementById("all_app_new").style.display = "none";
-        document.getElementById("vasu_new").style.display = "none";
-        document.getElementById("veni_new").style.display = "none";
-        document.getElementById("vasu_old").style.display = "none";
-        document.getElementById("veni_old").style.display = "none";
-    }
-    if(t==2 && d==2)
-    {
-        //show
-        document.getElementById("vasu_old").style.display = "block";
+          //hide
+          document.getElementById("all_app_new").style.display = "none";
+          document.getElementById("vasu_new").style.display = "none";
+          document.getElementById("veni_new").style.display = "none";
+          document.getElementById("vasu_old").style.display = "none";
+          document.getElementById("veni_old").style.display = "none";
+        }
+        if (t == 2 && d == 2) {
+          //show
+          document.getElementById("vasu_old").style.display = "block";
 
-        // hide
-        document.getElementById("all_app_new").style.display = "none";
-        document.getElementById("vasu_new").style.display = "none";
-        document.getElementById("veni_new").style.display = "none";
-        document.getElementById("all_app_old").style.display = "none";
-        document.getElementById("veni_old").style.display = "none";
-    }
-    if(t==2 && d==3)
-    {
-        //show
-        document.getElementById("veni_old").style.display = "block";
+          // hide
+          document.getElementById("all_app_new").style.display = "none";
+          document.getElementById("vasu_new").style.display = "none";
+          document.getElementById("veni_new").style.display = "none";
+          document.getElementById("all_app_old").style.display = "none";
+          document.getElementById("veni_old").style.display = "none";
+        }
+        if (t == 2 && d == 3) {
+          //show
+          document.getElementById("veni_old").style.display = "block";
 
-        //hide
-        document.getElementById("all_app_new").style.display = "none";
-        document.getElementById("vasu_new").style.display = "none";
-        document.getElementById("veni_new").style.display = "none";
-        document.getElementById("all_app_old").style.display = "none";
-        document.getElementById("vasu_old").style.display = "none";
-    }
-}
-function generate1()
-   {
-   const doc = new jsPDF()
-   doc.text(85, 15, "All Appointments");
-    doc.autoTable({
-        startY: 20,  
-         margin: {horizontal: 7},
-        html: '#appointmentTable1',
-        theme: 'grid',
+          //hide
+          document.getElementById("all_app_new").style.display = "none";
+          document.getElementById("vasu_new").style.display = "none";
+          document.getElementById("veni_new").style.display = "none";
+          document.getElementById("all_app_old").style.display = "none";
+          document.getElementById("vasu_old").style.display = "none";
+        }
+      }
+      function generate1() {
+        const doc = new jsPDF();
+        doc.text(85, 15, "All Appointments");
+        doc.autoTable({
+          startY: 20,
+          margin: { horizontal: 7 },
+          html: "#appointmentTable1",
+          theme: "grid",
 
-             
-                  styles: {
-                    minCellHeight: 10,
-                }
-    })
-    doc.save('All Appointments.pdf');
-   }
-   function generate2()
-   {
-   const doc = new jsPDF()
-   doc.text(85, 15, "All Appointments");
-    doc.autoTable({
-        startY: 20,  
-         margin: {horizontal: 7},
-        html: '#appointmentTable2',
-        theme: 'grid',
+          styles: {
+            minCellHeight: 10,
+          },
+        });
+        doc.save("All Appointments.pdf");
+      }
+      function generate2() {
+        const doc = new jsPDF();
+        doc.text(85, 15, "All Appointments");
+        doc.autoTable({
+          startY: 20,
+          margin: { horizontal: 7 },
+          html: "#appointmentTable2",
+          theme: "grid",
 
-             
-                  styles: {
-                    minCellHeight: 10,
-                }
-    })
-    doc.save('All Appointments.pdf');
-   }
-   function generate3()
-   {
-   const doc = new jsPDF()
-   doc.text(85, 15, "All Appointments");
-    doc.autoTable({
-        startY: 20,  
-         margin: {horizontal: 7},
-        html: '#appointmentTable3',
-        theme: 'grid',
+          styles: {
+            minCellHeight: 10,
+          },
+        });
+        doc.save("All Appointments.pdf");
+      }
+      function generate3() {
+        const doc = new jsPDF();
+        doc.text(85, 15, "All Appointments");
+        doc.autoTable({
+          startY: 20,
+          margin: { horizontal: 7 },
+          html: "#appointmentTable3",
+          theme: "grid",
 
-             
-                  styles: {
-                    minCellHeight: 10,
-                }
-    })
-    doc.save('All Appointments of Dr Vasunethra Kasargod.pdf');
-   }
-   function generate4()
-   {
-   const doc = new jsPDF()
-   doc.text(85, 15, "All Appointments");
-    doc.autoTable({
-        startY: 20,  
-         margin: {horizontal: 7},
-        html: '#appointmentTable4',
-        theme: 'grid',
+          styles: {
+            minCellHeight: 10,
+          },
+        });
+        doc.save("All Appointments of Dr Vasunethra Kasargod.pdf");
+      }
+      function generate4() {
+        const doc = new jsPDF();
+        doc.text(85, 15, "All Appointments");
+        doc.autoTable({
+          startY: 20,
+          margin: { horizontal: 7 },
+          html: "#appointmentTable4",
+          theme: "grid",
 
-             
-                  styles: {
-                    minCellHeight: 10,
-                }
-    })
-    doc.save('All Appointments of Dr Vasunethra Kasargod.pdf');
-   }
-   function generate5()
-   {
-   const doc = new jsPDF()
-   doc.text(85, 15, "All Appointments");
-    doc.autoTable({
-        startY: 20,  
-         margin: {horizontal: 7},
-        html: '#appointmentTable5',
-        theme: 'grid',
+          styles: {
+            minCellHeight: 10,
+          },
+        });
+        doc.save("All Appointments of Dr Vasunethra Kasargod.pdf");
+      }
+      function generate5() {
+        const doc = new jsPDF();
+        doc.text(85, 15, "All Appointments");
+        doc.autoTable({
+          startY: 20,
+          margin: { horizontal: 7 },
+          html: "#appointmentTable5",
+          theme: "grid",
 
-             
-                  styles: {
-                    minCellHeight: 10,
-                }
-    })
-    doc.save('All Appointments of Doctor Veni N.pdf');
-   }
-   function generate6()
-   {
-   const doc = new jsPDF()
-   doc.text(85, 15, "All Appointments");
-    doc.autoTable({
-        startY: 20,  
-         margin: {horizontal: 7},
-        html: '#appointmentTable6',
-        theme: 'grid',
+          styles: {
+            minCellHeight: 10,
+          },
+        });
+        doc.save("All Appointments of Doctor Veni N.pdf");
+      }
+      function generate6() {
+        const doc = new jsPDF();
+        doc.text(85, 15, "All Appointments");
+        doc.autoTable({
+          startY: 20,
+          margin: { horizontal: 7 },
+          html: "#appointmentTable6",
+          theme: "grid",
 
-             
-                  styles: {
-                    minCellHeight: 10,
-                }
-    })
-    doc.save('All Appointments of Doctor Veni N.pdf');
-   }
-      </script>
-</body>
+          styles: {
+            minCellHeight: 10,
+          },
+        });
+        doc.save("All Appointments of Doctor Veni N.pdf");
+      }
+    </script>
+  </body>
 </html>

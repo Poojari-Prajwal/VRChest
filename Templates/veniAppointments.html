@@ -4,7 +4,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" description="Book your appointment with Dr. Veni Nß - VR Chest and Women Care."/>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+      description="Book your appointment with Dr. Veni Nß - VR Chest and Women Care."
+    />
     <link rel="icon" href="{% static 'img/logo.png' %}" />
     <title>Book an Appointment | VR Chest and Women Care</title>
 
@@ -31,6 +35,7 @@
     />
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
     <script>
       $(function () {
         $("#datePickerId").datepicker({
@@ -43,8 +48,87 @@
           },
         });
       });
-    </script>
-    <script>
+
+      $(document).on("click", ".time-slot", function () {
+        // Remove selected class from all buttons
+        $(".time-slot").removeClass("selected");
+
+        // Add selected class to clicked button
+        $(this).addClass("selected");
+      });
+
+      $(document).ready(function () {
+        $("#timeSlotsDiv").html(
+          '<div class="text-muted">Please select a date to see available time slots.</div>'
+        );
+
+        $("#datePickerId").change(function () {
+          var selectedDate = $(this).val();
+          $.ajax({
+            url: "/get_available_time_slots",
+            data: {
+              date: selectedDate,
+              doctor: $("#doc").val(),
+            },
+            dataType: "json",
+            beforeSend: function () {
+              // Show loader
+              $("#timeSlotsDiv").html(
+                '<div class="spinner-border" role="status"><span class="sr-only">Loading...</span> </div>'
+              );
+            },
+            success: function (response) {
+              $("#timeSlotsDiv").empty();
+              $.each(response, function (index, value) {
+                var slotTime = value["time_slot"];
+                var isAvailable = value["is_available"];
+                var buttonText = slotTime.toUpperCase();
+                var buttonText = slotTime.toUpperCase();
+                if (buttonText.endsWith("PM")) {
+                  buttonText = buttonText.replace("PM", " PM");
+                } else if (buttonText.endsWith("AM")) {
+                  buttonText = buttonText.replace("AM", " AM");
+                }
+                var buttonClass = "btn btn-secondary time-slot";
+                if (!isAvailable) {
+                  buttonClass += " disabled";
+                }
+                $("#timeSlotsDiv").append(
+                  '<button type="button" class="' +
+                    buttonClass +
+                    '" value="' +
+                    slotTime +
+                    '">' +
+                    buttonText +
+                    "</button>"
+                );
+              });
+            },
+            error: function () {
+              $("#timeSlotsDiv").html(
+                '<div class="text-danger">Error occurred while fetching available time slots.</div>'
+              );
+            },
+          });
+        });
+      });
+
+      $(document).on("click", ".time-slot", function () {
+        var selectedTimeSlot = $(this).val();
+        $("#timeSlot").val(selectedTimeSlot);
+      });
+
+      $(document).on("click", "#submit", function (event) {
+        var value = $("#timeSlot").val();
+        if (!value) {
+          event.preventDefault();
+          $("#select-time-slot-message").text(
+            "Please select a time slot to book your appointment."
+          );
+          return;
+        }
+      });
+
       $(document).ready(function () {
         $("#submit-btn").click(function (event) {
           var typeValue = $("#timeId").val();
@@ -56,6 +140,28 @@
         });
       });
     </script>
+
+    <style>
+      .time-slot {
+        color: #17a2c2 !important;
+        background-color: #fff !important;
+        border: 1px solid #17a2c2 !important;
+        margin-right: 5px;
+        margin-bottom: 10px !important;
+      }
+
+      .time-slot:hover,
+      .selected {
+        color: #fff !important;
+        background-color: #17a2c2 !important;
+      }
+
+      .disabled {
+        background: #eee !important;
+        opacity: 1 important;
+        border: 1px solid #eee !important;
+      }
+    </style>
   </head>
   <body>
     {% include 'header.html' %}
@@ -121,23 +227,16 @@
             required
           />
         </div>
+
         <div class="mb-3">
           <label for="timeId" class="form-label"
-            >Time <span style="color: red">*</span></label
+            >Time <span style="color: red" required>*</span></label
           >
-          <input
-            type="time"
-            class="form-control"
-            id="timeId"
-            min="11:00"
-            max="19:00"
-            name="time"
-            required
-          />
-          <div id="timeHelp" class="form-text">
-            "Kindly choose a time between 11:00AM and 2:00PM, or 4:00PM and 7:00PM
-          </div>
+          <input type="hidden" id="timeSlot" name="timeSlot" value="" />
+          <div id="timeSlotsDiv"></div>
+          <div id="select-time-slot-message" class="text-danger mt-2"></div>
         </div>
+
         <div class="mb-3">
           <label for="doctors"> Doctor <span style="color: red">*</span></label>
           <select
