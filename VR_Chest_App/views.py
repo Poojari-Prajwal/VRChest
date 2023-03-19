@@ -47,8 +47,6 @@ def appointmentConfirm(request):
         date=request.POST.get('date')
         time_slots=request.POST.get('timeSlot')
         doctor=request.POST.get('doctor')
-        obj= Appointment(Name=name,Mobileno=contact, Email=email, Date=date, TimeSlots=time_slots, Doctor=doctor)
-        obj.save()
         # subject = 'Appointment Request Sent - VR Chest and Women Care'
         # msg = 'Dear '+ name+ ', \nJust a quick note to confirm that we have received your appointment request. We will review your request and get back to you as soon as possible.\nThank you.\n\n Regards, \n VR Chest and Women Care'
         # #send mail for customer
@@ -65,6 +63,13 @@ def appointmentConfirm(request):
         # except Exception as e:
         #     messages.error(request,'Failed to send the appointment request.')
         #     print(e)
+        try:
+            obj= Appointment(Name=name,Mobileno=contact, Email=email, Date=date, TimeSlots=time_slots, Doctor=doctor)
+            obj.save()
+            messages.success(request,'Appointment Request Sent!')
+        except Exception as e:
+            messages.error(request,'Failed to send the appointment request.')
+            print(e)
         return redirect('/')
 
 def get_available_time_slots(request):
@@ -161,81 +166,110 @@ def showAppointments (request):
     return render(request, 'showAppointments.html', {'app_all_new':app_all_new,'app_all_old':app_all_old,'vasu_new':vasu_new,'vasu_old':vasu_old,'veni_new':veni_new,'veni_old':veni_old})
 
 
-@login_required(login_url='/login')
-@csrf_exempt
-def handleRequests(request):
-        all_appointments = Appointment.objects.filter(RequestStatus=1) 
-        vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod", RequestStatus =1)
-        veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N", RequestStatus=1)
-        app_all_new = sorted(all_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-        app_all_old = sorted(all_appointments, key=lambda x: (x.Date, x.Time))
-        vasu_new = sorted(vasu_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-        vasu_old = sorted(vasu_appointments, key=lambda x: (x.Date, x.Time))
-        veni_new= sorted(veni_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-        veni_old = sorted(veni_appointments, key=lambda x: (x.Date, x.Time))
-        return render(request, 'handleRequests.html', {'app_all_new':app_all_new,'app_all_old':app_all_old,'vasu_new':vasu_new,'vasu_old':vasu_old,'veni_new':veni_new,'veni_old':veni_old})
+# @login_required(login_url='/login')
+# @csrf_exempt
+# def handleRequests(request):
+#         all_appointments = Appointment.objects.filter(RequestStatus=1) 
+#         vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod", RequestStatus =1)
+#         veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N", RequestStatus=1)
+#         app_all_new = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+#         app_all_old = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots))
+#         vasu_new = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+#         vasu_old = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots))
+#         veni_new= sorted(veni_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+#         veni_old = sorted(veni_appointments, key=lambda x: (x.Date, x.TimeSlots))
+#         return render(request, 'handleRequests.html', {'app_all_new':app_all_new,'app_all_old':app_all_old,'vasu_new':vasu_new,'vasu_old':vasu_old,'veni_new':veni_new,'veni_old':veni_old})
+
+# @login_required(login_url='/login')
+# @csrf_exempt
+# def requestAccept(request):
+#     try:
+#         request_id = request.GET.get('s_id')
+#         appoint = Appointment.objects.get(id=request_id)
+#         appoint.RequestStatus=2
+#         appoint.save()
+#         subject = 'Appointment Confirmation - VR Chest and Women Care'
+#         msg = 'Dear '+ appoint.Name + ', \nyour appointment with '+ appoint.Doctor+ ' is scheduled for '+ str(appoint.Date)+ ' at '+ str(appoint.Time)+ '. Please arrive 15 minutes early at our office. We look forward to seeing you soon.\n\n Regards, \n VR Chest and Women Care'
+#         # send_mail(subject, msg , 'support@vrchestandwomencare.com', [appoint.Email], fail_silently=True)
+#         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+#     except Exception as e:
+#         print(e)
+#         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+# @login_required(login_url='/login')
+# @csrf_exempt
+# def requestReject(request):
+#     try:
+#         request_id = request.GET.get('s_id')
+#         appoint = Appointment.objects.get(id=request_id)
+#         appoint.RequestStatus=3
+#         appoint.save()
+#         subject = 'Appointment Request Rejected - VR Chest and Women Care'
+#         msg = 'Dear '+ appoint.Name+', \nwe regret to inform you that we are unable to schedule your appointment at this time as '+appoint.Doctor+ ' is currently unavailable. We apologize for any inconvenience this may cause. Please feel free to contact us if you have any further questions.\n\n Regards, \n VR Chest and Women Care'
+#         # send_mail(subject, msg , 'support@vrchestandwomencare.com', [appoint.Email], fail_silently=True)
+#         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+#     except Exception as e:
+#         print(e)
+#         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+# @login_required(login_url='/login')
+# @csrf_exempt
+# def showAcceptRequests(request):
+#     all_appointments = Appointment.objects.filter(RequestStatus=2) 
+#     vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod", RequestStatus =2)
+#     veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N", RequestStatus=2)
+#     app_all_new = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+#     app_all_old = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots))
+#     vasu_new = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+#     vasu_old = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots))
+#     veni_new= sorted(veni_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+#     veni_old = sorted(veni_appointments, key=lambda x: (x.Date, x.TimeSlots))
+#     return render(request, 'acceptedRequests.html', {'app_all_new':app_all_new,'app_all_old':app_all_old,'vasu_new':vasu_new,'vasu_old':vasu_old,'veni_new':veni_new,'veni_old':veni_old})
+
+
+# @login_required(login_url='/login')
+# @csrf_exempt
+# def showRejectRequests(request):
+#     all_appointments = Appointment.objects.filter(RequestStatus=3) 
+#     vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod", RequestStatus =3)
+#     veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N", RequestStatus=3)
+#     app_all_new = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+#     app_all_old = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots))
+#     vasu_new = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+#     vasu_old = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots))
+#     veni_new= sorted(veni_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+#     veni_old = sorted(veni_appointments, key=lambda x: (x.Date, x.TimeSlots))
+#     return render(request, 'rejectedRequests.html', {'app_all_new':app_all_new,'app_all_old':app_all_old,'vasu_new':vasu_new,'vasu_old':vasu_old,'veni_new':veni_new,'veni_old':veni_old})
+
 
 @login_required(login_url='/login')
 @csrf_exempt
-def requestAccept(request):
-    try:
-        request_id = request.GET.get('s_id')
-        appoint = Appointment.objects.get(id=request_id)
-        appoint.RequestStatus=2
-        appoint.save()
-        subject = 'Appointment Confirmation - VR Chest and Women Care'
-        msg = 'Dear '+ appoint.Name + ', \nyour appointment with '+ appoint.Doctor+ ' is scheduled for '+ str(appoint.Date)+ ' at '+ str(appoint.Time)+ '. Please arrive 15 minutes early at our office. We look forward to seeing you soon.\n\n Regards, \n VR Chest and Women Care'
-        # send_mail(subject, msg , 'support@vrchestandwomencare.com', [appoint.Email], fail_silently=True)
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    except Exception as e:
-        print(e)
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+def bookAppointmentStaffVasu(request):
+    return render ( request, 'vasuStaff.html')
 
 @login_required(login_url='/login')
 @csrf_exempt
-def requestReject(request):
-    try:
-        request_id = request.GET.get('s_id')
-        appoint = Appointment.objects.get(id=request_id)
-        appoint.RequestStatus=3
-        appoint.save()
-        subject = 'Appointment Request Rejected - VR Chest and Women Care'
-        msg = 'Dear '+ appoint.Name+', \nwe regret to inform you that we are unable to schedule your appointment at this time as '+appoint.Doctor+ ' is currently unavailable. We apologize for any inconvenience this may cause. Please feel free to contact us if you have any further questions.\n\n Regards, \n VR Chest and Women Care'
-        # send_mail(subject, msg , 'support@vrchestandwomencare.com', [appoint.Email], fail_silently=True)
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    except Exception as e:
-        print(e)
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+def bookAppointmentStaffVeni(request):
+    return render ( request, 'veniStaff.html')
 
 @login_required(login_url='/login')
 @csrf_exempt
-def showAcceptRequests(request):
-    all_appointments = Appointment.objects.filter(RequestStatus=2) 
-    vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod", RequestStatus =2)
-    veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N", RequestStatus=2)
-    app_all_new = sorted(all_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    app_all_old = sorted(all_appointments, key=lambda x: (x.Date, x.Time))
-    vasu_new = sorted(vasu_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    vasu_old = sorted(vasu_appointments, key=lambda x: (x.Date, x.Time))
-    veni_new= sorted(veni_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    veni_old = sorted(veni_appointments, key=lambda x: (x.Date, x.Time))
-    return render(request, 'acceptedRequests.html', {'app_all_new':app_all_new,'app_all_old':app_all_old,'vasu_new':vasu_new,'vasu_old':vasu_old,'veni_new':veni_new,'veni_old':veni_old})
-
-
-@login_required(login_url='/login')
-@csrf_exempt
-def showRejectRequests(request):
-    all_appointments = Appointment.objects.filter(RequestStatus=3) 
-    vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod", RequestStatus =3)
-    veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N", RequestStatus=3)
-    app_all_new = sorted(all_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    app_all_old = sorted(all_appointments, key=lambda x: (x.Date, x.Time))
-    vasu_new = sorted(vasu_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    vasu_old = sorted(vasu_appointments, key=lambda x: (x.Date, x.Time))
-    veni_new= sorted(veni_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    veni_old = sorted(veni_appointments, key=lambda x: (x.Date, x.Time))
-    return render(request, 'rejectedRequests.html', {'app_all_new':app_all_new,'app_all_old':app_all_old,'vasu_new':vasu_new,'vasu_old':vasu_old,'veni_new':veni_new,'veni_old':veni_old})
-
+def bookAppointmentStaffConfirm(request):
+    if request.method=='POST':
+        name=request.POST.get('name')
+        contact=request.POST.get('mobileno')
+        email=request.POST.get('email')
+        date=request.POST.get('date')
+        time_slots=request.POST.get('timeSlot')
+        doctor=request.POST.get('doctor')
+        try:
+            obj= Appointment(Name=name,Mobileno=contact, Email=email, Date=date, TimeSlots=time_slots, Doctor=doctor)
+            obj.save()
+            messages.success(request,'Appointment Request Sent!')
+        except Exception as e:
+            messages.error(request,'Failed to send the appointment request.')
+            print(e)
+        return redirect('staff')
 
 @login_required(login_url='/login')
 @csrf_exempt
@@ -243,14 +277,65 @@ def showTodayAppointments(request):
     all_appointments = Appointment.objects.filter(RequestStatus=2, Date=date.today()) 
     vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod", RequestStatus =2 , Date=date.today())
     veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N", RequestStatus=2 , Date=date.today())
-    app_all_new = sorted(all_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    app_all_old = sorted(all_appointments, key=lambda x: (x.Date, x.Time))
-    vasu_new = sorted(vasu_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    vasu_old = sorted(vasu_appointments, key=lambda x: (x.Date, x.Time))
-    veni_new= sorted(veni_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    veni_old = sorted(veni_appointments, key=lambda x: (x.Date, x.Time))
+    app_all_new = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+    app_all_old = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots))
+    vasu_new = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+    vasu_old = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots))
+    veni_new= sorted(veni_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+    veni_old = sorted(veni_appointments, key=lambda x: (x.Date, x.TimeSlots))
     return render(request, 'todayAppointments.html', {'app_all_new':app_all_new,'app_all_old':app_all_old,'vasu_new':vasu_new,'vasu_old':vasu_old,'veni_new':veni_new,'veni_old':veni_old})
 
+
+@login_required(login_url='/login')
+@csrf_exempt
+def showUpcomingAppointments(request):
+    all_appointments = Appointment.objects.filter(RequestStatus=2) 
+    vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod", RequestStatus =2)
+    veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N", RequestStatus=2)
+    app_all_new1 = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+    app_all_old1 = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots), )
+    vasu_new1 = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+    vasu_old1 = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots))
+    veni_new1= sorted(veni_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
+    veni_old1 = sorted(veni_appointments, key=lambda x: (x.Date, x.TimeSlots))
+    app_all_new=[]
+    app_all_old=[]
+    vasu_new=[]
+    vasu_old=[]
+    veni_new=[]
+    veni_old=[]
+    for a in app_all_new1:
+        if a.Date > date.today():
+            app_all_new.append(a)
+        if (a.Date== date.today() and a.Time >= datetime.now().time()):
+            app_all_new.append(a)   
+    for a in app_all_old1:
+        if a.Date > date.today():
+            app_all_old.append(a)
+        if a.Date== date.today() and a.Time >= datetime.now().time():
+            app_all_old.append(a) 
+    for a in veni_new1:
+        if a.Date > date.today():
+            veni_new.append(a)
+        if a.Date== date.today() and a.Time >= datetime.now().time():
+            veni_new.append(a)   
+    for a in veni_old1:
+        if a.Date > date.today():
+            veni_old.append(a)
+        if a.Date== date.today() and a.Time >= datetime.now().time():
+            veni_old.append(a)   
+    for a in vasu_new1:
+        if a.Date > date.today():
+            vasu_new.append(a)
+        if a.Date== date.today() and a.Time >= datetime.now().time():
+            vasu_new.append(a) 
+    for a in vasu_old1:
+        if a.Date > date.today():
+            vasu_old.append(a)
+        if a.Date== date.today() and a.Time >= datetime.now().time():
+            vasu_old.append(a)   
+    return render(request, 'showUpcomingAppointments.html', {'app_all_new':app_all_new,'app_all_old':app_all_old,'vasu_new':vasu_new,'vasu_old':vasu_old,'veni_new':veni_new,'veni_old':veni_old})           
+   
 
 @login_required(login_url='/login')
 @csrf_exempt
@@ -349,58 +434,7 @@ def editReview(request, review_id):
         form.save()
         return redirect("edit-or-delete-reviews")
     return render(request, 'editReviews.html',{'review':review, 'form':form})
-
-
-@login_required(login_url='/login')
-@csrf_exempt
-def showUpcomingAppointments(request):
-    all_appointments = Appointment.objects.filter(RequestStatus=2) 
-    vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod", RequestStatus =2)
-    veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N", RequestStatus=2)
-    app_all_new1 = sorted(all_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    app_all_old1 = sorted(all_appointments, key=lambda x: (x.Date, x.Time), )
-    vasu_new1 = sorted(vasu_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    vasu_old1 = sorted(vasu_appointments, key=lambda x: (x.Date, x.Time))
-    veni_new1= sorted(veni_appointments, key=lambda x: (x.Date, x.Time), reverse=True)
-    veni_old1 = sorted(veni_appointments, key=lambda x: (x.Date, x.Time))
-    app_all_new=[]
-    app_all_old=[]
-    vasu_new=[]
-    vasu_old=[]
-    veni_new=[]
-    veni_old=[]
-    for a in app_all_new1:
-        if a.Date > date.today():
-            app_all_new.append(a)
-        if (a.Date== date.today() and a.Time >= datetime.now().time()):
-            app_all_new.append(a)   
-    for a in app_all_old1:
-        if a.Date > date.today():
-            app_all_old.append(a)
-        if a.Date== date.today() and a.Time >= datetime.now().time():
-            app_all_old.append(a) 
-    for a in veni_new1:
-        if a.Date > date.today():
-            veni_new.append(a)
-        if a.Date== date.today() and a.Time >= datetime.now().time():
-            veni_new.append(a)   
-    for a in veni_old1:
-        if a.Date > date.today():
-            veni_old.append(a)
-        if a.Date== date.today() and a.Time >= datetime.now().time():
-            veni_old.append(a)   
-    for a in vasu_new1:
-        if a.Date > date.today():
-            vasu_new.append(a)
-        if a.Date== date.today() and a.Time >= datetime.now().time():
-            vasu_new.append(a) 
-    for a in vasu_old1:
-        if a.Date > date.today():
-            vasu_old.append(a)
-        if a.Date== date.today() and a.Time >= datetime.now().time():
-            vasu_old.append(a)   
-    return render(request, 'showUpcomingAppointments.html', {'app_all_new':app_all_new,'app_all_old':app_all_old,'vasu_new':vasu_new,'vasu_old':vasu_old,'veni_new':veni_new,'veni_old':veni_old})           
-    
+ 
 
 def facilities(request):
     return render(request, 'facilities.html')

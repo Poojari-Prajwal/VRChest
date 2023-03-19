@@ -27,7 +27,7 @@ class Appointment(models.Model):
     Email = models.CharField(max_length=50)
     Date = models.DateField()
     Doctor=models.CharField(max_length=30)
-    RequestStatus=models.IntegerField(default=1) #1 for pending, 2 for accept and 3 for reject
+   # RequestStatus=models.IntegerField(default=1) #1 for pending, 2 for accept and 3 for reject
     TimeSlots = models.CharField(max_length=50)
 
 class Gallery_Image(models.Model):
