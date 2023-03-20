@@ -274,9 +274,9 @@ def bookAppointmentStaffConfirm(request):
 @login_required(login_url='/login')
 @csrf_exempt
 def showTodayAppointments(request):
-    all_appointments = Appointment.objects.filter(RequestStatus=2, Date=date.today()) 
-    vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod", RequestStatus =2 , Date=date.today())
-    veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N", RequestStatus=2 , Date=date.today())
+    all_appointments = Appointment.objects.filter(Date=date.today()) 
+    vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod", Date=date.today())
+    veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N", Date=date.today())
     app_all_new = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
     app_all_old = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots))
     vasu_new = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
@@ -289,9 +289,9 @@ def showTodayAppointments(request):
 @login_required(login_url='/login')
 @csrf_exempt
 def showUpcomingAppointments(request):
-    all_appointments = Appointment.objects.filter(RequestStatus=2) 
-    vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod", RequestStatus =2)
-    veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N", RequestStatus=2)
+    all_appointments = Appointment.objects.all() 
+    vasu_appointments = Appointment.objects.filter(Doctor = "Dr. Vasunetra Kasargod")
+    veni_appointments = Appointment.objects.filter(Doctor="Dr. Veni N")
     app_all_new1 = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
     app_all_old1 = sorted(all_appointments, key=lambda x: (x.Date, x.TimeSlots), )
     vasu_new1 = sorted(vasu_appointments, key=lambda x: (x.Date, x.TimeSlots), reverse=True)
