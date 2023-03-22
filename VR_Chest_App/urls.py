@@ -42,4 +42,5 @@ urlpatterns = [
     path('appointments/dr-vasunetra', views.vasuAppointments, name='dr-vasunetra'),
     path('appointments/dr-veni', views.veniAppointments, name='dr-veni'),
     path('show-today-appointments', views.showTodayAppointments, name='show-today-appointments'),
+    path('update_appointment/<int:id>', views.update_appointment, name='update_appointment'),
 ]

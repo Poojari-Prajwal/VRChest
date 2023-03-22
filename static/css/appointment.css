@@ -76,3 +76,7 @@
   outline: none !important;
   box-shadow: none !important;
 }
+
+.form-control[readonly] {
+  background-color: #fff !important;
+}

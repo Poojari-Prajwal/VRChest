@@ -3,6 +3,7 @@ from .models import Feedback, Appointment, Gallery_Image, Review, Article
 # import googlemaps
 # import pandas as pd
 import calendar
+from django.urls import reverse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
@@ -76,13 +77,10 @@ def get_available_time_slots(request):
     if request.method == "GET":
         selected_date = request.GET.get("date")
         doctor = request.GET.get("doctor")
-    
         # Get the appointments for the selected date and doctor
         appointments = Appointment.objects.filter(Date=selected_date, Doctor=doctor)
-
         # Get the available slots for the selected doctor
         available_slots = get_doctor_time_slots(doctor)
-
         if appointments:
             # If there are existing appointments, mark the corresponding time slots as unavailable
             for appointment in appointments:
@@ -93,6 +91,28 @@ def get_available_time_slots(request):
         return JsonResponse(available_slots, safe=False)
     else:
         return HttpResponseNotAllowed(["GET"])
+
+
+#Update appointment
+def update_appointment(request, id):
+    if request.method == "POST":
+        try:
+            appointment = Appointment.objects.get(id=id)
+            appointment.Date = request.POST.get('date')
+            appointment.TimeSlots = request.POST.get('timeSlot')
+            appointment.save()
+            subject = 'Appointment Updated - VR Chest and Women Care.'
+            msg = 'Dear '+ appointment.Name + ', \nWe have updated your appointment request with '+ appointment.Doctor+ ' on '+ str(appointment.Date)+ ' at '+ str(appointment.TimeSlots)+ '. Please arrive 15 minutes early at our office. We look forward to seeing you soon.\n\n Regards, \n VR Chest and Women Care'
+            try:
+                send_mail(subject, msg, 'support@vrchestandwomencare.com', [appointment.Email])
+            except Exception as e:
+                print(e)
+            return redirect(reverse('show-appointments') + '?message=success')
+        except Exception as e:
+            print(e)
+        return redirect(reverse('show-appointments') + '?message=error')
+    else:
+        return redirect('/show-appointments')
 
 
 # Returns respective time slots for doctor
