@@ -24,7 +24,7 @@ class Appointment(models.Model):
     id=models.AutoField(primary_key=True)
     Name = models.CharField(max_length=50)
     Mobileno=models.BigIntegerField()
-    Email = models.CharField(max_length=50)
+    Email = models.CharField(max_length=50, default='Not provided')
     Date = models.DateField()
     Doctor=models.CharField(max_length=30)
    # RequestStatus=models.IntegerField(default=1) #1 for pending, 2 for accept and 3 for reject
