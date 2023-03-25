@@ -382,7 +382,7 @@
                 <input type="button" onclick="generate1()" value="Export PDF" class="btn" />
             </div>
             <div class="appointment" style="overflow-x:auto;min-width:350px;padding:15px;">
-                <table id="appointmentTable1">
+                <table>
                     <tr>
                         <th>Sl no.</th>
                         <th>Name</th>
@@ -471,6 +471,28 @@
                     </tr>
                     {% endfor %}
                 </table>
+            <table id="appointmentTable1" style="display:none;">
+                <tr>
+                    <th>Sl no.</th>
+                    <th>Name</th>
+                    <th>Mobile no</th>
+                    <th>Email id</th>
+                    <th>Date</th>
+                    <th> Time</th>
+                    <th>Doctor</th>
+                </tr>
+                {% for appointment in app_all_new %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{appointment.Name}}</td>
+                    <td>{{appointment.Mobileno}}</td>
+                    <td>{{appointment.Email}}</td>
+                    <td>{{appointment.Date}}</td>
+                    <td>{{appointment.TimeSlots}} </td>
+                    <td>{{appointment.Doctor}}</td>
+                </tr>
+                {% endfor %}
+            </table>
             </div>
         </div>
     </div>

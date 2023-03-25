@@ -52,7 +52,7 @@ def appointmentConfirm(request):
             obj = Appointment(Name=name,Mobileno=contact, Email=email, Date=date, TimeSlots=time_slots, Doctor=doctor)
             obj.save()
             subject = 'Appointment Confirmed - VR Chest and Women Care'
-            msg = 'Dear '+ name + ', \nyour appointment with '+ doctor+ ' is scheduled for '+ str(date)+ ' at '+ str(time_slots)+ '. Please arrive 15 minutes early at our office. We look forward to seeing you soon.\n\n Regards, \n VR Chest and Women Care'
+            msg = 'Dear '+ name + ', \n\nYour appointment with '+ doctor+ ' is scheduled for '+ str(date)+ ' at '+ str(time_slots)+ '. Please arrive 15 minutes early to our hospital. We look forward to seeing you soon.\n\n Regards, \n VR Chest and Women Care'
             send_mail(subject, msg, 'support@vrchestandwomencare.com', [email])
             messages.success(request,'Appointment Confirmed!')
         except Exception as e:
@@ -74,7 +74,6 @@ def get_available_time_slots(request):
                 for slot in available_slots:
                     if slot["time_slot"] in appointment.TimeSlots:
                         slot["is_available"] = False
-
         return JsonResponse(available_slots, safe=False)
     else:
         return HttpResponseNotAllowed(["GET"])
@@ -89,7 +88,7 @@ def update_appointment(request, id):
             appointment.TimeSlots = request.POST.get('timeSlot')
             appointment.save()
             subject = 'Appointment Updated - VR Chest and Women Care.'
-            msg = 'Dear '+ appointment.Name + ', \nWe have updated your appointment request with '+ appointment.Doctor+ ' on '+ str(appointment.Date)+ ' at '+ str(appointment.TimeSlots)+ '. Please arrive 15 minutes early at our office. We look forward to seeing you soon.\n\n Regards, \n VR Chest and Women Care'
+            msg = 'Dear '+ appointment.Name + ', \nWe have updated your appointment request with '+ appointment.Doctor+ ' on '+ str(appointment.Date)+ ' at '+ str(appointment.TimeSlots)+ '. Please arrive 15 minutes early to our hospital. We look forward to seeing you soon.\n\n Regards, \n VR Chest and Women Care'
             try:
                 send_mail(subject, msg, 'support@vrchestandwomencare.com', [appointment.Email])
             except Exception as e:

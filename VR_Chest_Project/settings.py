@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'VR_Chest_App.apps.VrChestAppConfig',
-    'django.core.mail',
 ]
 
 MIDDLEWARE = [
@@ -140,7 +139,6 @@ EMAIL_USE_SSL = True
 EMAIL_HOST_USER = 'support@vrchestandwomencare.com'
 EMAIL_HOST_PASSWORD = 'aadritikasargod4'
 DEFAULT_FROM_EMAIL = 'support@vrchestandwomencare.com'
-
 
 # handle 404 error
 handler404 = 'VR_Chest_App.views.pageNotFound'
