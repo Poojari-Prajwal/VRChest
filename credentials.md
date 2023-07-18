@@ -4,5 +4,5 @@ super user:
   
   
 Godaddy email:
-  id: support@vrchestandwomencare.com
+  id:   
   password: aadritikasargod4

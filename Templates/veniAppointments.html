@@ -79,29 +79,36 @@
             },
             success: function (response) {
               $("#timeSlotsDiv").empty();
-              $.each(response, function (index, value) {
-                var slotTime = value["time_slot"];
-                var isAvailable = value["is_available"];
-                var buttonText = slotTime.toUpperCase();
-                if (buttonText.endsWith("PM")) {
-                  buttonText = buttonText.replace("PM", " PM");
-                } else if (buttonText.endsWith("AM")) {
-                  buttonText = buttonText.replace("AM", " AM");
-                }
-                var buttonClass = "btn btn-secondary time-slot";
-                if (!isAvailable) {
-                  buttonClass += " disabled";
-                }
-                $("#timeSlotsDiv").append(
-                  '<button type="button" class="' +
-                    buttonClass +
-                    '" value="' +
-                    slotTime +
-                    '">' +
-                    buttonText +
-                    "</button>"
+              if ("message" in response) {
+                // Display the custom message if present in the response
+                $("#timeSlotsDiv").html(
+                  '<div class="text-danger">' + response.message + "</div>"
                 );
-              });
+              } else {
+                $.each(response, function (index, value) {
+                  var slotTime = value["time_slot"];
+                  var isAvailable = value["is_available"];
+                  var buttonText = slotTime.toUpperCase();
+                  if (buttonText.endsWith("PM")) {
+                    buttonText = buttonText.replace("PM", " PM");
+                  } else if (buttonText.endsWith("AM")) {
+                    buttonText = buttonText.replace("AM", " AM");
+                  }
+                  var buttonClass = "btn btn-secondary time-slot";
+                  if (!isAvailable) {
+                    buttonClass += " disabled";
+                  }
+                  $("#timeSlotsDiv").append(
+                    '<button type="button" class="' +
+                      buttonClass +
+                      '" value="' +
+                      slotTime +
+                      '">' +
+                      buttonText +
+                      "</button>"
+                  );
+                });
+              }
             },
             error: function () {
               $("#timeSlotsDiv").html(

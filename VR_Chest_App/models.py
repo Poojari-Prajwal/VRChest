@@ -4,7 +4,7 @@ from pickle import TRUE
 from django.db import models
 
 
-CHOICES=(
+CHOICES=( 
     (5,"5"),
     (4.5,"4.5"),
     (4,"4"),
@@ -27,7 +27,7 @@ class Appointment(models.Model):
     Email = models.CharField(max_length=50, default='Not provided')
     Date = models.DateField()
     Doctor=models.CharField(max_length=30)
-   # RequestStatus=models.IntegerField(default=1) #1 for pending, 2 for accept and 3 for reject
+    # RequestStatus=models.IntegerField(default=1) #1 for pending, 2 for accept and 3 for reject
     TimeSlots = models.CharField(max_length=50)
 
 class Gallery_Image(models.Model):
@@ -46,6 +46,19 @@ class Article(models.Model):
     content=models.TextField()
     slug=models.SlugField(max_length=100)
     link = models.CharField(max_length=200, null=True)
+
+class Doctor(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+class DoctorLeave(models.Model):
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, default=1)  # Set the default to the primary key of the default doctor
+    leave_date = models.DateField()
+
+    def __str__(self):
+        return f"{self.doctor.name} - {self.leave_date}"
     
 
 

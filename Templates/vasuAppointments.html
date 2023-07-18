@@ -79,24 +79,31 @@
             },
             success: function (response) {
               $("#timeSlotsDiv").empty();
-              $.each(response, function (index, value) {
-                var slotTime = value["time_slot"];
-                var isAvailable = value["is_available"];
-                var buttonText = slotTime.toUpperCase().replace("PM", " PM");
-                var buttonClass = "btn btn-secondary time-slot";
-                if (!isAvailable) {
-                  buttonClass += " disabled";
-                }
-                $("#timeSlotsDiv").append(
-                  '<button type="button" class="' +
-                    buttonClass +
-                    '" value="' +
-                    slotTime +
-                    '">' +
-                    buttonText +
-                    "</button>"
+              if ("message" in response) {
+                // Display the custom message if present in the response
+                $("#timeSlotsDiv").html(
+                  '<div class="text-danger">' + response.message + "</div>"
                 );
-              });
+              } else {
+                $.each(response, function (index, value) {
+                  var slotTime = value["time_slot"];
+                  var isAvailable = value["is_available"];
+                  var buttonText = slotTime.toUpperCase().replace("PM", " PM");
+                  var buttonClass = "btn btn-secondary time-slot";
+                  if (!isAvailable) {
+                    buttonClass += " disabled";
+                  }
+                  $("#timeSlotsDiv").append(
+                    '<button type="button" class="' +
+                      buttonClass +
+                      '" value="' +
+                      slotTime +
+                      '">' +
+                      buttonText +
+                      "</button>"
+                  );
+                });
+              }
             },
             error: function () {
               $("#timeSlotsDiv").html(
@@ -123,6 +130,7 @@
         }
       });
     </script>
+
     <style>
       .time-slot {
         color: #17a2c2 !important;
@@ -205,7 +213,7 @@
             class="form-control"
             id="datePickerId"
             name="date"
-            placeholder="yyyy-mm--dd"
+            placeholder="yyyy-mm-dd"
             required
             readonly
           />
@@ -241,6 +249,5 @@
       </form>
     </div>
     <br /><br />
-    <!-- JS -->
   </body>
 </html>

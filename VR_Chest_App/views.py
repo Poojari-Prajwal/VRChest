@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from .models import Feedback, Appointment, Gallery_Image, Review, Article
+from django.shortcuts import get_object_or_404, render, redirect
+from .models import Feedback, Appointment, Gallery_Image, Review, Article, Doctor, DoctorLeave
 # import googlemaps
 # import pandas as pd
 import calendar
@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from .forms import ReviewForm, ArticleForm
+from .forms import DoctorLeaveForm, ReviewForm, ArticleForm
 from datetime import date, datetime
 from slugify import slugify
 from django.core.mail import send_mail
@@ -57,13 +57,23 @@ def appointmentConfirm(request):
             messages.success(request,'Appointment Confirmed!')
         except Exception as e:
             messages.error(request,'Failed to confirm the appointment.')
-            print(e)
         return redirect('/')
+
 
 def get_available_time_slots(request):
     if request.method == "GET":
         selected_date = request.GET.get("date")
         doctor = request.GET.get("doctor")
+
+        selected_date = datetime.strptime(selected_date, "%Y-%m-%d").date()
+
+        # Get the leave dates for the selected doctor
+        doctor_obj = Doctor.objects.get(name=doctor)
+        doctor_leave_dates = DoctorLeave.objects.filter(doctor=doctor_obj).values_list("leave_date", flat=True)
+        
+        if selected_date in doctor_leave_dates:
+            return JsonResponse({"message": "Doctor is on leave"}, safe=False)  # Return an empty list to indicate no available slots for doctor's leave
+        
         # Get the appointments for the selected date and doctor
         appointments = Appointment.objects.filter(Date=selected_date, Doctor=doctor)
         # Get the available slots for the selected doctor
@@ -92,11 +102,9 @@ def update_appointment(request, id):
             try:
                 send_mail(subject, msg, 'support@vrchestandwomencare.com', [appointment.Email])
             except Exception as e:
-                print(e)
-            return redirect(reverse('show-upcoming-appointments') + '?message=success')
+                return redirect(reverse('show-upcoming-appointments') + '?message=success')
         except Exception as e:
-            print(e)
-        return redirect(reverse('show-upcoming-appointments') + '?message=error')
+            return redirect(reverse('show-upcoming-appointments') + '?message=error')
     else:
         return redirect('/show-upcoming-appointments')
 
@@ -190,7 +198,6 @@ def bookAppointmentStaffConfirm(request):
             messages.success(request,'Appointment Request Sent!')
         except Exception as e:
             messages.error(request,'Failed to send the appointment request.')
-            print(e)
         return redirect('staff')
 
 @login_required(login_url='/login')
@@ -227,7 +234,6 @@ def deleteGalleryImages(request):
         delete_image.delete()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     except Exception as e:
-        print(e)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
@@ -275,7 +281,6 @@ def deleteReview(request):
         delete_review.delete()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     except Exception as e:
-        print(e)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
@@ -284,6 +289,39 @@ def deleteReview(request):
 def showFeedback(request):
     feedbacks=Feedback.objects.all()
     return render(request,'showFeedback.html' ,{'feedbacks':feedbacks})
+
+@login_required(login_url='/login')
+@csrf_exempt
+def doctorLeaveApply(request):
+    if request.method == 'POST':
+        doctor_name = request.POST.get('doctor')
+        dates = request.POST.get('dates')
+
+        if doctor_name and dates:
+            doctor, _ = Doctor.objects.get_or_create(name=doctor_name)
+            dates_list = dates.split(',')
+            for date_str in dates_list:
+                DoctorLeave.objects.create(doctor=doctor, leave_date=date_str.strip())
+            return redirect('staff')
+
+    # Render the form template
+    return render(request,'doctorLeaveApply.html')
+
+
+@login_required(login_url='/login')
+@csrf_exempt
+def delete_doctor_leave(request, pk):
+    doctor_leave = get_object_or_404(DoctorLeave, pk=pk)
+    if request.method == 'POST':
+        doctor_leave.delete()
+    return redirect('show-doctor-leaves')
+
+
+@login_required(login_url='/login')
+@csrf_exempt
+def doctorLeaveDisplay(request):
+    doctor_leaves= DoctorLeave.objects.all()
+    return render(request, 'showDoctorLeave.html',{'doctor_leaves':doctor_leaves})
 
 
 @login_required(login_url='/login')
@@ -295,7 +333,6 @@ def deleteFeedback(request):
         delete_feedback.delete()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     except Exception as e:
-        print(e)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
@@ -340,7 +377,6 @@ def deleteArticle(request):
         delete_article.delete()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     except Exception as e:
-        print(e)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 

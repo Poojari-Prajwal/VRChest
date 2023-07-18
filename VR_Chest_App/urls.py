@@ -43,4 +43,7 @@ urlpatterns = [
     path('appointments/dr-veni', views.veniAppointments, name='dr-veni'),
     path('show-today-appointments', views.showTodayAppointments, name='show-today-appointments'),
     path('update_appointment/<int:id>', views.update_appointment, name='update_appointment'),
+    path('doctor-leave-apply', views.doctorLeaveApply, name='doctor-leave-apply'),
+    path('show-doctor-leaves', views.doctorLeaveDisplay, name='show-doctor-leaves'),
+    path('delete-doctor-leave/<int:pk>/', views.delete_doctor_leave, name='delete-doctor-leave'),
 ]

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Review, Article
+from .models import Review, Article, DoctorLeave
 
 class ReviewForm(ModelForm):
     class Meta:
@@ -32,3 +32,8 @@ class ArticleForm(ModelForm):
             'link':'E-Article link (if any)'
         }
         
+
+class DoctorLeaveForm(forms.ModelForm):
+    class Meta:
+        model = DoctorLeave
+        fields = ['doctor', 'leave_date']
